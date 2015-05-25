@@ -118,6 +118,39 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2015-05-25 </div>
+			<div class="article-title"><a href="/2015/05/25/分解质因数/" >分解质因数</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>今天要说的题目来源于 <a href="http://codeforces.com/contest/546/problem/D" target="_blank" rel="external">Soldier and Number Game</a>. 这道题到底干什么呢，说白了就是求两个数$1 \le b \le a \le 5 000 000$之间的所有数的质因数数目之和。快速求解一个数的质因数数目是这道题的关键。</p>
+<p><a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes" target="_blank" rel="external">Sieve of Eratosthenes</a> 是这道题的关键。这是一个求解质数/质数判定的方法，其思想是筛选出一个质数的整数倍，质数的整数倍必然不是质数，所以都被筛选出去。在没有筛选的结果中继续求解当前最小数字的整数倍，直至筛完为止。其 C++ 代码如下所示：</p>
+<figure class="highlight cpp"><figcaption><span>Sieve of Eratosthenes</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// prime number table from 2 to 5000000</span></span><br><span class="line"><span class="comment">// those who have number 0 are prime numbers.</span></span><br><span class="line"><span class="keyword">int</span> table[<span class="number">5000001</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_table</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> limit = <span class="built_in">sqrt</span>(<span class="number">5000000</span>)+<span class="number">1</span>;</span><br><span class="line">    table[<span class="number">0</span>]=table[<span class="number">1</span>]=-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=limit; i++)</span><br><span class="line">        <span class="keyword">if</span>(!table[i])</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">2</span>; j*i&lt;=<span class="number">5000000</span>; j++)</span><br><span class="line">                table[i*j]=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isprime</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;<span class="keyword">return</span> !table[i];&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以发现，在这个质数表中实际上还存储了每个数字的一个质因数。要提取出一个数的完整质因数分解，只要依据<s>基本法</s><code>a/=table[a]</code>不断迭代就可以了。</p>
+<p>但是如果按照这样的思路去数每个数的质因数个数的话，在原题中还是会超时。其一个原因是我们要求的是质因数的个数，其可以在建立质数表的时候完成。其二，求从 a 到 b 中每个质因数的个数之和，倾向于使用部分和的方法。</p>
+<p>那么怎么求每个数的质因数个数呢，在 Sieve of Eratosthenes 的基础之上？</p>
+<figure class="highlight cpp"><figcaption><span>Number of Prime Factors</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_table</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//const int limit = sqrt(5000000)+1;</span></span><br><span class="line">    <span class="comment">//table[0]=table[1]=-1;</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=<span class="number">5000000</span>; i++)</span><br><span class="line">        <span class="keyword">if</span>(!table[i])</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=i; j&lt;=<span class="number">5000000</span>; j+=i)</span><br><span class="line">                table[j]=table[j/i]+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/05/25/分解质因数/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2015-04-26 </div>
 			<div class="article-title"><a href="/2015/04/26/Combination-Sum/" >Combination Sum</a></div>						
 		</h3>
@@ -699,60 +732,6 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 </div>
 
 		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2014-07-27 </div>
-			<div class="article-title"><a href="/2014/07/27/二叉搜索树与快速排序的内在相似性/" >二叉搜索树与快速排序的内在相似性</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-12">
-	  
-	
-	  <p>对我来说，对随机事件的分析，恐怕是最难的。我原以为我数学学得还可以，直到我遇上了随机过程。这篇 blog 所讲的是算法分析，其中涉及到大量对随机情况的分析。因此我在此将其梳理一下，特别注重挖掘不同算法之间的分析过程的相似性。</p>
-<p>快速排序是一种原址排序方法，随机化的快排具有 <em>O(nlgn)</em> 的期望运行时间。这个在《算法导论》（第三版）的 7.4.2 节中有一个以比较操作为中心的证明方法。这个证明的核心思想就是：快速排序是由多次 partition 过程组成的，因此关键问题就在于获得 partition 过程的运行时间和运行 partition 过程的次数。partition 过程的最大运行次数是 n-1 次，可以记为 <em>O(n)</em> ，对于其运行时间，练习 7.1-3 给出的结论是 <em>Θ(n)</em> 。这样乍一算，似乎是 <em>O($n^2$)</em> 的时间复杂度。这样计算是错误的，因为 partition 的时间复杂度与其长度有关。这里，我们需要更为细致的分析。决定 partition 运行时间的是其内部循环次数。这个循环次数可以统计每次必须运行的比较次数而得到。通过计算整个 quicksort 的比较次数，我们就可以得到真正的 partition 循环次数。而这个比较次数的期望值，可以通过拆分成示性随机变量相加得到。这个分析的精华之处就在于分析出每两个元素进行比较的概率。很有意思，可以进行比较的组合是 <em>Θ($n^2$)</em> ，但是最终全部比较次数的期望是 <em>O(n lgn)</em> 。</p>
-<p>当然这个只是作为复习，不是今天的重点。这个方法实在是太不直观了点。这次我们用类似于 merge-sort 的分析方法进行分析。</p>
-<h3 id="快速排序分析">快速排序分析</h3><p>按照 merge-sort 的分析思路，quicksort 是将一个问题拆分成了两个子问题，但是由于子问题大小不是固定的，这时候就只能分析运行时间的期望。随机化的快速排序使得任何一个元素成为主元都是等可能的。因此我们有如下式子：</p>
-<span>$$\begin{aligned}
-E[T(n)] & =  E \left[ \sum^{n}_{q=1} X_q \left( T(q-1) + T(n-q) + \Theta (n) \right) \right] \\
-            & =  \frac{2}{n} \sum^{n-1}_{q=2} E[T(q)] + \Theta (n)
-\end{aligned}$$</span>
-<p>随后，可以通过代入法，把 <em>n lgn</em> 代入 T(n)。其中，有如下不等式可以利用：</p>
-<span>$$\begin{equation}
-\sum^{n-1}_{k=2} k \log k \le \frac{1}{2} n^2 \log n - \frac{1}{8} n^2
-\end{equation}$$</span>
-<p>由于这个不等式的天赐特性，我们只能记住，有如（1）式的结论就是 <em>O(n lgn)</em> 。</p>
-<h3 id="二叉搜索树分析">二叉搜索树分析</h3><p>我们知道，二叉搜索树的动态操作时间复杂度是 <em>O(h)</em> 。但是对于随机构建的二叉搜索树来说，其期望树高是 <em>O(n lgn)</em> ，对于随机构建的二叉搜索树来说。这里我们证明的是一个稍弱于此定理的定理：<strong>随机构建的二叉搜索树的平均节点深度为 <em>O(n lgn)</em></strong>。</p>
-<p>为表示每一个节点的深度，我们记树<strong><em>T</em></strong>的节点x的深度为 <em>d(x, T)</em> ，而全部节点的深度之和记为 <em>P(T)</em> 。节点平均深度可以表示为</p>
-<span>$$\begin{equation}
-\frac{1}{n} \sum_{x \in T} d(x, T) = \frac{1}{n} P(T)
-\end{equation}$$</span>
-<p>而每一棵树可以拆分为节点与左子树、右子树。我们需要注意，当把 P(T) 拆分为$P(T<em>{left})$和$P(T</em>{right})$之后深度还应该增加当前树总节点再减一。也就是</p>
-<span>$$\begin{equation}
-P(T)=P(T_{left})+P(T_{right})+n-1
-\end{equation}$$</span>
-<p>对于某一棵树确实是这样。但是这棵树是随机构建的。如何表示出 P(T) 的期望值？事实上，这里和快速排序一样，在随机构建的过程中，第一个元素总是根节点，每一个元素成为第一个元素的概率都是相等的。因此，我们可以据此写出：</p>
-<span>$$\begin{equation}
-E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
-\end{equation}$$</span>
-<p>其中 P(n) 是具有 n 个节点的树高。这时候，我们发现，这和在快速排序那里推导出来的式子是非常相似的。因此，延续着快排分析的思路，可以分析出 P(n) = O(n lgn)。</p>
-<p>知道这一点有什么用呢？当构建一棵二叉搜索树时，第一个元素会被选为根节点，其后的元素，每一个都要和其比较。这和快速排序的比较次数是一样的。因为当一个元素选为主元的时候，其后的每一个元素都要和其比较。这样，当用相同的序列构建二叉搜索树和进行快速排序的时候，他们所需要的比较次数是相同的。</p>
-
-	
-	</div>
-	
-  
-</div>
-	<a type="button" href="/2014/07/27/二叉搜索树与快速排序的内在相似性/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -805,6 +784,8 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 		
 			<li><a href="/categories/OJ-Review/">OJ Review<span>5</span></a></li>
 		
+			<li><a href="/categories/OJ-review/">OJ review<span>1</span></a></li>
+		
 			<li><a href="/categories/Projects/">Projects<span>3</span></a></li>
 		
 		</ul>
@@ -816,33 +797,33 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/xml/">xml<span>2</span></a></li>
-		
-			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
+			<li><a href="/tags/sublime-text-2/">sublime text 2<span>1</span></a></li>
 		
 			<li><a href="/tags/CUDA-C/">CUDA C<span>1</span></a></li>
 		
-			<li><a href="/tags/Machine-Learning/">Machine Learning<span>1</span></a></li>
-		
-			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
+			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
 		
 			<li><a href="/tags/wordpress/">wordpress<span>2</span></a></li>
 		
-			<li><a href="/tags/Algorithm/">Algorithm<span>7</span></a></li>
+			<li><a href="/tags/C/">C++<span>8</span></a></li>
 		
-			<li><a href="/tags/tools/">tools<span>1</span></a></li>
+			<li><a href="/tags/Algorithm/">Algorithm<span>8</span></a></li>
 		
-			<li><a href="/tags/C/">C++<span>7</span></a></li>
+			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
 		
-			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
+			<li><a href="/tags/apache/">apache<span>2</span></a></li>
 		
-			<li><a href="/tags/sublime-text-2/">sublime text 2<span>1</span></a></li>
-		
-			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
+			<li><a href="/tags/Machine-Learning/">Machine Learning<span>1</span></a></li>
 		
 			<li><a href="/tags/Backend/">Backend<span>2</span></a></li>
 		
-			<li><a href="/tags/apache/">apache<span>2</span></a></li>
+			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
+		
+			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
+		
+			<li><a href="/tags/xml/">xml<span>2</span></a></li>
+		
+			<li><a href="/tags/tools/">tools<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -854,6 +835,10 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2015/05/25/分解质因数/" ><i class="fa fa-file-o"></i>分解质因数...</a>
+      </li>
     
       <li>
         <a href="/2015/04/26/Combination-Sum/" ><i class="fa fa-file-o"></i>Combination Sum...</a>
@@ -869,10 +854,6 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
     
       <li>
         <a href="/2015/01/03/OJ-总结-Depricated/" ><i class="fa fa-file-o"></i>OJ 总结(Depricated)...</a>
-      </li>
-    
-      <li>
-        <a href="/2014/11/01/Game-Theory-Note-week-3/" ><i class="fa fa-file-o"></i>Game Theory Note - week 3...</a>
       </li>
     
   </ul>

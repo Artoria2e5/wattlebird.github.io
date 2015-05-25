@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://wattlebird.github.io/"/>
-  <updated>2015-05-01T19:23:24.914Z</updated>
+  <updated>2015-05-25T15:39:33.902Z</updated>
   <id>http://wattlebird.github.io/</id>
   
   <author>
@@ -13,6 +13,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[分解质因数]]></title>
+    <link href="http://wattlebird.github.io/2015/05/25/%E5%88%86%E8%A7%A3%E8%B4%A8%E5%9B%A0%E6%95%B0/"/>
+    <id>http://wattlebird.github.io/2015/05/25/分解质因数/</id>
+    <published>2015-05-25T14:38:22.000Z</published>
+    <updated>2015-05-25T15:39:33.902Z</updated>
+    <content type="html"><![CDATA[<p>今天要说的题目来源于 <a href="http://codeforces.com/contest/546/problem/D" target="_blank" rel="external">Soldier and Number Game</a>. 这道题到底干什么呢，说白了就是求两个数$1 \le b \le a \le 5 000 000$之间的所有数的质因数数目之和。快速求解一个数的质因数数目是这道题的关键。</p>
+<p><a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes" target="_blank" rel="external">Sieve of Eratosthenes</a> 是这道题的关键。这是一个求解质数/质数判定的方法，其思想是筛选出一个质数的整数倍，质数的整数倍必然不是质数，所以都被筛选出去。在没有筛选的结果中继续求解当前最小数字的整数倍，直至筛完为止。其 C++ 代码如下所示：</p>
+<figure class="highlight cpp"><figcaption><span>Sieve of Eratosthenes</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// prime number table from 2 to 5000000</span></span><br><span class="line"><span class="comment">// those who have number 0 are prime numbers.</span></span><br><span class="line"><span class="keyword">int</span> table[<span class="number">5000001</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_table</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> limit = <span class="built_in">sqrt</span>(<span class="number">5000000</span>)+<span class="number">1</span>;</span><br><span class="line">    table[<span class="number">0</span>]=table[<span class="number">1</span>]=-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=limit; i++)</span><br><span class="line">        <span class="keyword">if</span>(!table[i])</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">2</span>; j*i&lt;=<span class="number">5000000</span>; j++)</span><br><span class="line">                table[i*j]=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isprime</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;<span class="keyword">return</span> !table[i];&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以发现，在这个质数表中实际上还存储了每个数字的一个质因数。要提取出一个数的完整质因数分解，只要依据<s>基本法</s><code>a/=table[a]</code>不断迭代就可以了。</p>
+<p>但是如果按照这样的思路去数每个数的质因数个数的话，在原题中还是会超时。其一个原因是我们要求的是质因数的个数，其可以在建立质数表的时候完成。其二，求从 a 到 b 中每个质因数的个数之和，倾向于使用部分和的方法。</p>
+<p>那么怎么求每个数的质因数个数呢，在 Sieve of Eratosthenes 的基础之上？</p>
+<figure class="highlight cpp"><figcaption><span>Number of Prime Factors</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_table</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//const int limit = sqrt(5000000)+1;</span></span><br><span class="line">    <span class="comment">//table[0]=table[1]=-1;</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=<span class="number">5000000</span>; i++)</span><br><span class="line">        <span class="keyword">if</span>(!table[i])</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=i; j&lt;=<span class="number">5000000</span>; j+=i)</span><br><span class="line">                table[j]=table[j/i]+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天要说的题目来源于 <a href="http://codeforces.com/contest/546/problem/D" target="_blank" rel="external">Soldier and Number Game</a>. 这道题到底干什么呢，说白]]>
+    </summary>
+    
+      <category term="Algorithm" scheme="http://wattlebird.github.io/tags/Algorithm/"/>
+    
+      <category term="C++" scheme="http://wattlebird.github.io/tags/C/"/>
+    
+      <category term="OJ review" scheme="http://wattlebird.github.io/categories/OJ-review/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Combination Sum]]></title>
@@ -242,7 +268,7 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
     <link href="http://wattlebird.github.io/2015/01/03/OJ-%E6%80%BB%E7%BB%93-Depricated/"/>
     <id>http://wattlebird.github.io/2015/01/03/OJ-总结-Depricated/</id>
     <published>2015-01-02T23:00:00.000Z</published>
-    <updated>2015-05-01T21:29:13.056Z</updated>
+    <updated>2015-05-01T21:31:01.164Z</updated>
     <content type="html"><![CDATA[<h3 id="2015-01-04">2015.01.04</h3><p><a href="https://oj.leetcode.com/problems/search-insert-position/" target="_blank" rel="external">Simple Binary Search</a></p>
 <p>题目大意就是一种更好的 Binary Search，在一个已经排好序的数组里面找到 target，返回 target 索引。如果找不到，那么就返回 target 应该插入的位置。</p>
 <p>我觉得还是 <em>Acclerated C++</em> 那本书给了我很多启示。Binary  search 的搜索区间看作是一个左闭右开区间，每次迭代的过程中，不变的准则是：区间的右边是开区间。这样可以省去考虑中间点恰好是 target 的麻烦。这样做的好处除了省去中间点的考量外，也省略掉了尾端的考虑：在 C 语言中，整数类型向 0 取整，所以 4 是 end 的话，所有小于 4 的数与之相加除以 2 的结果都必然小于 4。</p>
