@@ -123,25 +123,25 @@
 <span>$$\begin{aligned}
 E[T(n)] & =  E \left[ \sum^{n}_{q=1} X_q \left( T(q-1) + T(n-q) + \Theta (n) \right) \right] \\
             & =  \frac{2}{n} \sum^{n-1}_{q=2} E[T(q)] + \Theta (n)
-\end{aligned}$$</span>
+\end{aligned}$$</span><!-- Has MathJax -->
 <p>随后，可以通过代入法，把 <em>n lgn</em> 代入 T(n)。其中，有如下不等式可以利用：</p>
 <span>$$\begin{equation}
 \sum^{n-1}_{k=2} k \log k \le \frac{1}{2} n^2 \log n - \frac{1}{8} n^2
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>由于这个不等式的天赐特性，我们只能记住，有如（1）式的结论就是 <em>O(n lgn)</em> 。</p>
 <h3 id="二叉搜索树分析">二叉搜索树分析</h3><p>我们知道，二叉搜索树的动态操作时间复杂度是 <em>O(h)</em> 。但是对于随机构建的二叉搜索树来说，其期望树高是 <em>O(n lgn)</em> ，对于随机构建的二叉搜索树来说。这里我们证明的是一个稍弱于此定理的定理：<strong>随机构建的二叉搜索树的平均节点深度为 <em>O(n lgn)</em></strong>。</p>
 <p>为表示每一个节点的深度，我们记树<strong><em>T</em></strong>的节点x的深度为 <em>d(x, T)</em> ，而全部节点的深度之和记为 <em>P(T)</em> 。节点平均深度可以表示为</p>
 <span>$$\begin{equation}
 \frac{1}{n} \sum_{x \in T} d(x, T) = \frac{1}{n} P(T)
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>而每一棵树可以拆分为节点与左子树、右子树。我们需要注意，当把 P(T) 拆分为$P(T<em>{left})$和$P(T</em>{right})$之后深度还应该增加当前树总节点再减一。也就是</p>
 <span>$$\begin{equation}
 P(T)=P(T_{left})+P(T_{right})+n-1
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>对于某一棵树确实是这样。但是这棵树是随机构建的。如何表示出 P(T) 的期望值？事实上，这里和快速排序一样，在随机构建的过程中，第一个元素总是根节点，每一个元素成为第一个元素的概率都是相等的。因此，我们可以据此写出：</p>
 <span>$$\begin{equation}
 E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>其中 P(n) 是具有 n 个节点的树高。这时候，我们发现，这和在快速排序那里推导出来的式子是非常相似的。因此，延续着快排分析的思路，可以分析出 P(n) = O(n lgn)。</p>
 <p>知道这一点有什么用呢？当构建一棵二叉搜索树时，第一个元素会被选为根节点，其后的元素，每一个都要和其比较。这和快速排序的比较次数是一样的。因为当一个元素选为主元的时候，其后的每一个元素都要和其比较。这样，当用相同的序列构建二叉搜索树和进行快速排序的时候，他们所需要的比较次数是相同的。</p>
 	  
@@ -302,6 +302,36 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 </body>
    </html>

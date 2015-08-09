@@ -196,25 +196,25 @@
 <span>$$\begin{aligned}
 E[T(n)] & =  E \left[ \sum^{n}_{q=1} X_q \left( T(q-1) + T(n-q) + \Theta (n) \right) \right] \\
             & =  \frac{2}{n} \sum^{n-1}_{q=2} E[T(q)] + \Theta (n)
-\end{aligned}$$</span>
+\end{aligned}$$</span><!-- Has MathJax -->
 <p>随后，可以通过代入法，把 <em>n lgn</em> 代入 T(n)。其中，有如下不等式可以利用：</p>
 <span>$$\begin{equation}
 \sum^{n-1}_{k=2} k \log k \le \frac{1}{2} n^2 \log n - \frac{1}{8} n^2
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>由于这个不等式的天赐特性，我们只能记住，有如（1）式的结论就是 <em>O(n lgn)</em> 。</p>
 <h3 id="二叉搜索树分析">二叉搜索树分析</h3><p>我们知道，二叉搜索树的动态操作时间复杂度是 <em>O(h)</em> 。但是对于随机构建的二叉搜索树来说，其期望树高是 <em>O(n lgn)</em> ，对于随机构建的二叉搜索树来说。这里我们证明的是一个稍弱于此定理的定理：<strong>随机构建的二叉搜索树的平均节点深度为 <em>O(n lgn)</em></strong>。</p>
 <p>为表示每一个节点的深度，我们记树<strong><em>T</em></strong>的节点x的深度为 <em>d(x, T)</em> ，而全部节点的深度之和记为 <em>P(T)</em> 。节点平均深度可以表示为</p>
 <span>$$\begin{equation}
 \frac{1}{n} \sum_{x \in T} d(x, T) = \frac{1}{n} P(T)
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>而每一棵树可以拆分为节点与左子树、右子树。我们需要注意，当把 P(T) 拆分为$P(T<em>{left})$和$P(T</em>{right})$之后深度还应该增加当前树总节点再减一。也就是</p>
 <span>$$\begin{equation}
 P(T)=P(T_{left})+P(T_{right})+n-1
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>对于某一棵树确实是这样。但是这棵树是随机构建的。如何表示出 P(T) 的期望值？事实上，这里和快速排序一样，在随机构建的过程中，第一个元素总是根节点，每一个元素成为第一个元素的概率都是相等的。因此，我们可以据此写出：</p>
 <span>$$\begin{equation}
 E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>其中 P(n) 是具有 n 个节点的树高。这时候，我们发现，这和在快速排序那里推导出来的式子是非常相似的。因此，延续着快排分析的思路，可以分析出 P(n) = O(n lgn)。</p>
 <p>知道这一点有什么用呢？当构建一棵二叉搜索树时，第一个元素会被选为根节点，其后的元素，每一个都要和其比较。这和快速排序的比较次数是一样的。因为当一个元素选为主元的时候，其后的每一个元素都要和其比较。这样，当用相同的序列构建二叉搜索树和进行快速排序的时候，他们所需要的比较次数是相同的。</p>
 
@@ -355,14 +355,14 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 <h2 id="自动补全">自动补全</h2><p>自动补全是自动开启的，设置在Preferences/Settings-Default里面，有个”auto_complete”。<br>如果当前弹出窗没有弹出，可以按下Ctrl+空格，强制显示当前可补全选项。不会引发输入法吗，我想。<br>在HTML文档里，’&lt;’键是触发自动补全的按键。</p>
 <h2 id="Tab补全">Tab补全</h2><p>Tab补全是自动开启的，有个”tab_completion”的选项。<br>如果当前的补全结果并非为我所愿，可以按下Ctrl+空格，显示补全选框。<br>如果按下Tab不想补全而是写下制表符，可以按下Shift+Tab。</p>
 <h2 id="不受干扰模式">不受干扰模式</h2><p>这种模式跟全屏模式还有些区别。<br>View/Enter Distraction Free Mode打开此模式。或直接按Shift+F11。<br>设置不受干扰模式：与上文不同，路径在_Preferences/Settings - More</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">    "<span class="attribute">line_numbers</span>": <span class="value"><span class="literal">false</span></span>,  </span><br><span class="line">    "<span class="attribute">gutter</span>": <span class="value"><span class="literal">false</span></span>,  </span><br><span class="line">    "<span class="attribute">draw_centered</span>": <span class="value"><span class="literal">true</span></span>,  </span><br><span class="line">    "<span class="attribute">wrap_width</span>": <span class="value"><span class="number">80</span></span>,  </span><br><span class="line">    "<span class="attribute">word_wrap</span>": <span class="value"><span class="literal">true</span></span>,  </span><br><span class="line">    "<span class="attribute">scroll_past_end</span>": <span class="value"><span class="literal">true</span>  </span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;  &#10;    &#34;line_numbers&#34;: false,  &#10;    &#34;gutter&#34;: false,  &#10;    &#34;draw_centered&#34;: true,  &#10;    &#34;wrap_width&#34;: 80,  &#10;    &#34;word_wrap&#34;: true,  &#10;    &#34;scroll_past_end&#34;: true  &#10;&#125;</span><br></pre></td></tr></table></figure>
 <p>这是一个设置样本。特别注意的是”wrap_width”这个选项，这个选项之大小决定了该模式下的编辑宽度。</p>
 <h2 id="Vintage_Mode">Vintage Mode</h2><p>这个是Vi模式。此模式在默认状态下是关闭的，你需要做的是将其从ignored-packages中去除。编辑<code>&quot;ignored_packages&quot;: [&quot;Vintage&quot;]</code>至<code>&quot;ignored_packages&quot;: []</code>即可。</p>
 <p>Vintage模式默认状态是insert mode。如有不适请添加如下一行：</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"vintage_start_in_command_mode"</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;vintage_start_in_command_mode&#34;: true</span><br></pre></td></tr></table></figure>
 <p>需要注意的是，Vintage模式下的insert模式是Sublime正常工作的模式，在此情况下的vi快捷键不可用。而且Ex模式也不可用。</p>
 <p>Ctrl快捷键与Sublime冲突，默认关闭。如需启用，请打开</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"vintage_ctrl_keys"</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;vintage_ctrl_keys&#34;: true</span><br></pre></td></tr></table></figure>
 <h2 id="Projects">Projects</h2><p>在Sublime Text 2中，Projects由两个文件组成：</p>
 <ul>
 <li>Sublime Project File：定义Project，需要加入版本控制；*   Sublime-workspace file：用户的数据。</li>
@@ -398,18 +398,18 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 <p>但是当Ike设置了某个除Default之外的某个Permalink的时候，如果点击一篇发表的文章，就会出现Page Not Found的404错误。</p>
 <p>经反复查证，Ike发现Permalink与.htaccess和Apache的设置紧密相关。</p>
 <p>如果我们在Settings页面的Permalink中就某个选项进行了保存，wordpress在后台就会改写.htaccess：</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BEGIN WordPress</span></span><br><span class="line"><span class="tag">&lt;IfModule mod_rewrite.c&gt;</span></span><br><span class="line"><span class="keyword"><span class="common">RewriteEngine</span></span> <span class="literal">On</span></span><br><span class="line"><span class="keyword">RewriteBase</span> /blog/</span><br><span class="line"><span class="keyword"><span class="common">RewriteRule</span></span> ^index\.php$ -<span class="sqbracket"> [L]</span></span><br><span class="line"><span class="keyword"><span class="common">RewriteCond</span></span> <span class="cbracket">%&#123;REQUEST_FILENAME&#125;</span> !-f</span><br><span class="line"><span class="keyword"><span class="common">RewriteCond</span></span> <span class="cbracket">%&#123;REQUEST_FILENAME&#125;</span> !-d</span><br><span class="line"><span class="keyword"><span class="common">RewriteRule</span></span> . /blog/index.php<span class="sqbracket"> [L]</span></span><br><span class="line"><span class="tag">&lt;/IfModule&gt;</span></span><br><span class="line"><span class="comment"># END WordPress</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># BEGIN WordPress&#10;&#60;IfModule mod_rewrite.c&#62;&#10;RewriteEngine On&#10;RewriteBase /blog/&#10;RewriteRule ^index\.php$ - [L]&#10;RewriteCond %&#123;REQUEST_FILENAME&#125; !-f&#10;RewriteCond %&#123;REQUEST_FILENAME&#125; !-d&#10;RewriteRule . /blog/index.php [L]&#10;&#60;/IfModule&#62;&#10;# END WordPress</span><br></pre></td></tr></table></figure>
 <p>这个.htaccess文件是存放在网页的根目录下的，和wp-config.php存放的位置一样。如果wordpress不能改写此文件，则需要手动改写，但需要注意到的是Ike本人的网页是放在/blog文件夹下的，如果放在别的文件夹下，正确的.htaccess内容可能和上面不一样。</p>
 <p>如果成功改写.htaccess，只是成功了一半。因为Ike本人发现即使赋予了后台改写.htaccess的权限，还是不能访问。</p>
 <p>有文献报道指出，Apache需要使能rewrite_module才能使得Permalink正常工作。这就需要改写Aapche的配置文件。</p>
 <p>运行以下命令：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">find</span> / -<span class="built_in">type</span> <span class="keyword">f</span> -iname <span class="string">"httpd.conf"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find / -type f -iname &#34;httpd.conf&#34;</span><br></pre></td></tr></table></figure>
 <p>找到Apache的配置文件的位置。据相关文献报道，需要做的是将</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#LoadModule rewrite_module modules/mod_rewrite.so</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#LoadModule rewrite_module modules/mod_rewrite.so</span><br></pre></td></tr></table></figure>
 <p>的注释去掉。</p>
 <p>但甚为坑爹的是，Ike发现虚拟机上的Apache配置文件本来就没有把这一行给注释掉。</p>
 <p>经过一番查证，这里一篇<a href="https://stackoverflow.com/questions/17206524/404-error-after-changing-permalinks-wordpress" target="_blank" rel="external">帖子</a>为我们给出了解决方案的暗示。于是Ike在配置文件下找到了如下若干行：</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Each directory to which Apache has access can be configured with respect</span></span><br><span class="line"><span class="preprocessor"># to which services and features are allowed and/or disabled in that</span></span><br><span class="line"><span class="preprocessor"># directory (and its subdirectories).</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># First, we configure the "default" to be a very restrictive set of</span></span><br><span class="line"><span class="preprocessor"># features.</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line">&lt;Directory /&gt;</span><br><span class="line">    Options FollowSymLinks</span><br><span class="line">    AllowOverride All</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Possible values for the Options directive are "None", "All",</span></span><br><span class="line"><span class="preprocessor"># or any combination of:</span></span><br><span class="line"><span class="preprocessor">#   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Note that "MultiViews" must be named *explicitly* --- "Options All"</span></span><br><span class="line"><span class="preprocessor"># doesn't give it to you.</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># The Options directive is both complicated and important.  Please see</span></span><br><span class="line"><span class="preprocessor"># http://httpd.apache.org/docs/2.2/mod/core.html#options</span></span><br><span class="line"><span class="preprocessor"># for more information.</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line">    Options Indexes FollowSymLinks</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># AllowOverride controls what directives may be placed in .htaccess files.</span></span><br><span class="line"><span class="preprocessor"># AllowOverride controls what directives may be placed in .htaccess files.</span></span><br><span class="line"><span class="preprocessor"># It can be "All", "None", or any combination of the keywords:</span></span><br><span class="line"><span class="preprocessor">#   Options FileInfo AuthConfig Limit</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line">    AllowOverride All</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#10;# Each directory to which Apache has access can be configured with respect&#10;# to which services and features are allowed and/or disabled in that&#10;# directory (and its subdirectories).&#10;#&#10;# First, we configure the &#34;default&#34; to be a very restrictive set of&#10;# features.&#10;#&#10;&#60;Directory /&#62;&#10;    Options FollowSymLinks&#10;    AllowOverride All&#10;&#60;/Directory&#62;&#10;&#10;...&#10;&#10;#&#10;# Possible values for the Options directive are &#34;None&#34;, &#34;All&#34;,&#10;# or any combination of:&#10;#   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews&#10;#&#10;# Note that &#34;MultiViews&#34; must be named *explicitly* --- &#34;Options All&#34;&#10;# doesn&#39;t give it to you.&#10;#&#10;# The Options directive is both complicated and important.  Please see&#10;# http://httpd.apache.org/docs/2.2/mod/core.html#options&#10;# for more information.&#10;#&#10;    Options Indexes FollowSymLinks&#10;&#10;#&#10;# AllowOverride controls what directives may be placed in .htaccess files.&#10;# AllowOverride controls what directives may be placed in .htaccess files.&#10;# It can be &#34;All&#34;, &#34;None&#34;, or any combination of the keywords:&#10;#   Options FileInfo AuthConfig Limit&#10;#&#10;    AllowOverride All</span><br></pre></td></tr></table></figure>
 <p>按照上面配置，再重启Apache即可。大功告成。</p>
 
 	
@@ -577,33 +577,33 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/Backend/">Backend<span>2</span></a></li>
-		
-			<li><a href="/tags/tools/">tools<span>1</span></a></li>
-		
-			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
+			<li><a href="/tags/apache/">apache<span>2</span></a></li>
 		
 			<li><a href="/tags/CUDA-C/">CUDA C<span>1</span></a></li>
 		
-			<li><a href="/tags/Algorithm/">Algorithm<span>9</span></a></li>
-		
-			<li><a href="/tags/xml/">xml<span>2</span></a></li>
+			<li><a href="/tags/Backend/">Backend<span>2</span></a></li>
 		
 			<li><a href="/tags/C/">C++<span>9</span></a></li>
 		
-			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
-		
-			<li><a href="/tags/Machine-Learning/">Machine Learning<span>1</span></a></li>
-		
 			<li><a href="/tags/wordpress/">wordpress<span>2</span></a></li>
 		
-			<li><a href="/tags/apache/">apache<span>2</span></a></li>
+			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
 		
-			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
+			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
+		
+			<li><a href="/tags/tools/">tools<span>1</span></a></li>
+		
+			<li><a href="/tags/Algorithm/">Algorithm<span>9</span></a></li>
 		
 			<li><a href="/tags/sublime-text-2/">sublime text 2<span>1</span></a></li>
 		
-			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
+			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
+		
+			<li><a href="/tags/Machine-Learning/">Machine Learning<span>1</span></a></li>
+		
+			<li><a href="/tags/xml/">xml<span>2</span></a></li>
+		
+			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
 		
 		 
 		</ul>
@@ -728,6 +728,36 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 </body>
    </html>

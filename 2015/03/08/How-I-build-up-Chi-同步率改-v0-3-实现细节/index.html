@@ -125,20 +125,20 @@
 <h2 id="评分估计模型">评分估计模型</h2><p>　　我们记 Bangumi 某一类型（比如动画）作品的 user-item utility matrix 为 $R$，其是一个 $M \times N$ 的矩阵，其中用户数为 $M$，作品数为 $N$。矩阵的元素是元素所在行对应的用户评分减去该用户评分的平均值。用户未评分的元素值记为 0。我们的目的，就是要对某一个用户已标记未评分、收藏状态为 $s$ 的作品进行评分预估：  </p>
 <span>$$\begin{equation}
  r_{ij}=u_i v_j^T+bu_{is}+bi_{js}
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>　　其中 $u_{i}$ 是 $M \times Q$ 的 user-concept matirx $U$ 的第 $i$ 行行向量，$v_j$ 是 $Q \times N$ 的 concept-item matrix $V$ 的第 $j$ 列列向量。$bu_{is}$ 是用户状态偏置矩阵 $Bu$ 的元素，$bi_{js}$ 是作品状态偏置矩阵 $Bi$ 的元素。得出评分估计模型的关键就是求出这四个矩阵 $U$、$V$、$Bu$ 和 $Bi$，使得 root mean square error (RMSE)最小，同时又有较好的泛化能力。</p>
 <span>$$\begin{equation}
 RMSE = \frac{1}{\mbox{total rated item number}}\sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>　　实际上，这个问题就是最小化 RMSE 的最优化问题。假定我们已经有了 $U$、$V$、$Bu$ 和 $Bi$ 的初始估计值，那么我们就可以通过梯度下降的方法估计出使得 RMSE 最小的局部最优解。</p>
 <p>　　在 RMSE 的表达式中，total rated item number 是一个固定的常数，$r_{ij}$ 是已经观测到的评分。我们把最优化的目标函数写成如下形式：</p>
 <span>$$\begin{equation}
 Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\left(\sum_i||u_i||^2+\sum_j||v_j||^2+\sum_i||bu_i||^2+\sum_j||bi_j||^2\right)
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>　　目标函数的第一项是 RMSE，第二项是为了防止 $U$、$V$、$Bu$ 和 $Bi$ 过大的罚项。此目标函数对于行向量 $u_i$ 的导数为：</p>
 <span>$$\begin{equation}
 \frac{\partial}{\partial u_i}Obj = -2\sum_j\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)v_j+\frac{1}{\sigma^2}u_i
-\end{equation}$$</span>
+\end{equation}$$</span><!-- Has MathJax -->
 <p>　　对于其他项的导数可以一一推得，而且计算也很简单，这里就不赘述。</p>
 <p>　　但是目前的问题就是如何求出初始的 $U$、$V$、$Bu$ 和 $Bi$？初始值非常重要，选取一个好的初始值可以得到全局最优解。对于 $U$ 和 $V$，其是 $R$ 的一个近似分解。我们可以用 SVD 求出 $U$ 和 $V$ 的初始值。对于 $Bu$，其是一个 $M \times 5 $的矩阵，其每一行的元素是该用户处于想看、在看、看过、搁置或抛弃作品评分平均值与所有作品评分平均值之间的偏差。$Bi$ 是一个 $N \times 5$ 的矩阵，其每一行元素是该作品在 $R$ 中的不同状态中的评分平均值与 $R$ 中的总平均值之间的偏差。</p>
 <h2 id="泛化能力">泛化能力</h2><p>　　我们已经推导出了变量的初始值和梯度。通过不断迭代更新 $U$、$V$、$Bu$ 和 $Bi$ 我们可以得到很低的 RMSE。但是矩阵计算量巨大，我们需要在评分系统预估的表现和现有计算能力中取得折中。到底迭代多少次、学习率为多少时合适？</p>
@@ -308,6 +308,36 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 </body>
    </html>
