@@ -5,7 +5,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://wattlebird.github.io//"/>
-  <updated>2015-06-28T20:44:15.558Z</updated>
+  <updated>2016-02-05T14:12:00.108Z</updated>
   <id>http://wattlebird.github.io//</id>
   
   <author>
@@ -16,11 +16,144 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[使用 rankit 构建更科学的排名]]></title>
+    <link href="http://wattlebird.github.io/2016/02/05/%E4%BD%BF%E7%94%A8-rankit-%E6%9E%84%E5%BB%BA%E6%9B%B4%E7%A7%91%E5%AD%A6%E7%9A%84%E6%8E%92%E5%90%8D/"/>
+    <id>http://wattlebird.github.io/2016/02/05/使用-rankit-构建更科学的排名/</id>
+    <published>2016-02-05T13:21:33.000Z</published>
+    <updated>2016-02-05T14:12:00.108Z</updated>
+    <content type="html"><![CDATA[<p><a href="https://github.com/wattlebird/ranking" target="_blank" rel="external">rankit</a> 是一个使用线性代数和最优化理论为基础的常见排名算法库。这个库是我写的。我说“常见”其实对于绝大部分人来说根本就闻所未闻，但是对于专门研究排名的研究者来说，这里面包含的算法都是比较基础的。自从阅读了一本介绍排名的书籍<a href="https://book.douban.com/subject/25915707/" target="_blank" rel="external">《谁排第一？关于评价和排序的科学》</a>之后，我觉得很有必要把这里面的宝藏介绍给对此一无所知的研究者。作为一个做与机器学习相关研究的研究生，竟然除了 PageRank 和 HITS 其他排名算法一个都没有听说过——课上不教，研究也涉及不到——因为生活中应用这些排名算法的场景，实在是很少接触到。然而，这些排名算法正在美国的体育比赛排名中大行其道。在那本书中，大部分案例直接来源于美国的橄榄球比赛排名。</p>
+<p>然而要我把这本书里面所有的算法都介绍出来，实在是一件难事，一是有侵犯版权的嫌疑，二是其中涉及到大量的数学推导。我在此也只能简单地说一下。每一个排名（rank）由一个既定的评分（rating）产生，评分可以被解释为被排名对象的实力。在一定数学模型的指导下，被排名对象产生了比赛结果。这时候，可以看作 rating 这一因素导致了外在的比赛结果的观测值，这和 state 与 observation 的关系是一样的。根据不同的数学模型，就有了不同的 rating 算法。另外还有一个排名算法不依靠于 rating 数值，它试图给出一个 ranking，使得该排名与比赛的结果最为相符，说白了就是 linear ordering problem.</p>
+<p>那么这种排名算法对我们有什么启示呢？现实生活中好像没有多少排名问题能够用被排名对象之间的比赛来表达啊。搜索引擎的网页排名能用 in-link 和 out-link 表达网页之间的关系，但是网页之间怎么进行比赛呢？事实上，这本书能够拓宽人的眼界的地方就在于此。如果在一个网页排名结果中，网页点击量的大小可以视作在这一场比赛中的结果。网页流量的大小也是网页实力的一个外在特征。在商品排名中，同时购买两件商品的人的评分综合也可以被视为两件商品比赛的结果。事实上，我们应该抛弃“比赛”这种概念，对两个排名对象在同等条件下比较的结果进行 fitting 要远远稳定于计算一个平均分，或是加权平均的结果。</p>
+<h2 id="小白怎样使用_rankit？">小白怎样使用 rankit？</h2><p>rankit 提供了 Converter，只要用户能提供排名对象的每一轮的比赛结果（用 pandas.DataFrame 表示并包含特定的 columns），就能够为后续的算法计算出矩阵。在不同的数学模型下，需要的观测值就会有所不同。每一个算法都有它的物理意义，那么使用某一个算法要使用与其物理意义相对应的矩阵。比如说对于 MarkovRank 来说，这种算法需要表示排名对象之间相互投票的结果。我在 rankit 里面专门提供了 RateDifferenceVoteMatrix，SimpleDifferenceVoteMatrix 和 RateVoteMatrix 把观测到的评分结果表示成这样的矩阵。对于算法适用于什么样的矩阵这个问题，我在 rankit 的 GitHub 主页上面已经给出了参考表格。</p>
+<p>rankit 还提供了排名融合的算法，排名融合能够使多种算法的排名更加稳定。用户也可以自行构建排名加入排名融合器，生成融合后的排名。另外，如果要比较排名之间的结果，rankit 还提供了两种测度描述排名列表之间的差距。</p>
+<p>尽管我接口做得比较人性化了，我还是希望有一定背景知识的人去操纵这些算法。</p>
+<h2 id="为_Bangumi_动画排名！">为 Bangumi 动画排名！</h2><p>长久以来，Bangumi 用户对 Bangumi 的动画排名争论不休<a href="http://chii.in/blog/269600" target="_blank" rel="external">[1]</a><a href="http://chii.in/blog/269560" target="_blank" rel="external">[2]</a>。由于 Bangumi 网站的高质量，某些别有用心人士试图通过刷分提高某些动画的排名或降低某些动画的排名，达到自己不可告人的宗教和政治目的<a href="http://chii.in/group/topic/337530" target="_blank" rel="external">[3]</a><a href="http://chii.in/group/topic/311903" target="_blank" rel="external">[4]</a><a href="http://chii.in/blog/270420" target="_blank" rel="external">[5]</a>。除此以外，有用户建议使用更为细致化的排名系统<a href="http://chii.in/group/topic/13906" target="_blank" rel="external">[6]</a><a href="http://chii.in/blog/48952" target="_blank" rel="external">[7]</a>，但是所有这些讨论都没有超出统计学的范畴，最多也只是在平均分上做些加加减减，或是玩一些加权的把戏。一个综合的讨论收录可以参考<a href="http://chii.in/group/topic/41475" target="_blank" rel="external">[8]</a>.</p>
+<p>我们提出了一种全新的基于不同数学模型的排名方法，这些排名方法通过比较每两部作品的表现评分。同时看过两部作品的用户，我们可以计算他们为这两部作品评分的算术平均分、对数几何平均分和倾向性概率，从而生成三种作品间两两比较的实力数据。接着，对于每一种生成方法，我们使用八种不同的算法对作品进行排名。这些排名算法由 rankit 提供技术支撑。对于生成的 24 种排名，我们使用 Borda Count 融合所有排名，生成最终的动画排名。这 8 种算法分别是：</p>
+<ol>
+<li>Colley Rank (colley)</li>
+<li>Massey Rank (massey)</li>
+<li>Difference Rank (differ)</li>
+<li>Markov Rank, using rate vote matrix as input (markov_rv)</li>
+<li>Markov Rank, using rate difference vote matrix as input (markov_rdv)</li>
+<li>Markov Rank, using simple difference vote matrix as input (markov_sdv)</li>
+<li>Offence-defence Rank (od)</li>
+<li>Keener Rank (no bias) (keener)</li>
+</ol>
+<p>使用基于算术平均的排名使用 ariavg 做前缀，使用基于对数几何平均的排名使用 geoavg 做前缀，使用概率的排名我们使用 prob 做前缀。我们把最后的排名记作 merged_rank，把 Bangumi 原始排名记作 bangumi_rank，并对每一对排名计算 Kendall Measure，我们得到以下矩阵：</p>
+<p><img src="index.png" alt="Kendall Measure Matrix"></p>
+<p>如果两个排名的 Kendall Measure 等于 1，说明两个排名的相似度比较大。如果越趋近于 -1，则两个排名完全相反。从这张图我们可以看到，使用 Borda Count 后的综合排名与各大排名的 Kenall Measure 都比 Bangumi 原始平均分排名表现要好，这充分说明了我们排名的科学性。</p>
+<p>下表是该综合排名拍出来的 Bangumi 已排名 3252 部动画的前 20 位对应的作品 id：</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>253</td>
+<td>1</td>
+</tr>
+<tr>
+<td>326</td>
+<td>2</td>
+</tr>
+<tr>
+<td>324</td>
+<td>3</td>
+</tr>
+<tr>
+<td>265</td>
+<td>4</td>
+</tr>
+<tr>
+<td>237</td>
+<td>5</td>
+</tr>
+<tr>
+<td>321</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6049</td>
+<td>7</td>
+</tr>
+<tr>
+<td>1728</td>
+<td>8</td>
+</tr>
+<tr>
+<td>110467</td>
+<td>9</td>
+</tr>
+<tr>
+<td>2907</td>
+<td>10</td>
+</tr>
+<tr>
+<td>340</td>
+<td>11</td>
+</tr>
+<tr>
+<td>839</td>
+<td>12</td>
+</tr>
+<tr>
+<td>1608</td>
+<td>13</td>
+</tr>
+<tr>
+<td>876</td>
+<td>14</td>
+</tr>
+<tr>
+<td>3302</td>
+<td>15</td>
+</tr>
+<tr>
+<td>238</td>
+<td>16</td>
+</tr>
+<tr>
+<td>2734</td>
+<td>17</td>
+</tr>
+<tr>
+<td>1428</td>
+<td>18</td>
+</tr>
+<tr>
+<td>120700</td>
+<td>19</td>
+</tr>
+<tr>
+<td>37460</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<h2 id="如何在新算法下操纵排名？">如何在新算法下操纵排名？</h2><p>每一种算法都有被攻克的那一天，在提出语义搜索引擎之前，Google 一直在与 SEO 做着猫鼠游戏。当然，我这种简单的排名算法就更容易被操纵了。</p>
+<p>如果有用户进行刷分，而且每个小号只为一部作品刷分，那么我的排名算法能够阻止这种作弊行为。但是如果有用户进行刷分的小号对多部作品进行刷分，而且是为某几部作品评高分，而给某几部作品评低分，这样就会对排名算法产生影响。</p>
+<p>当然，也存在着针对这种行为的对抗方式，我们只需要对 Keener Rank 进行一些修改就能使得排名不容易被这种作弊方法操纵。</p>
+<p>而更为切实际的做法是，将人工排名与计算机排名相融合。在我看来，最为稳定的融合方式是 LeastViolatedMerge，但是这是一个 NPC 问题，目前还没有对 3000 部动画这种规模的 LeastViolatedMerge 解决方案。所以说越科学的排名需要消耗的资源也就越大。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><a href="https://github.com/wattlebird/ranking" target="_blank" rel="external">rankit</a> 是一个使用线性代数和最优化理论为基础的常见排名算法库。这个库是我写的。我说“常见”其实对于绝大]]>
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://wattlebird.github.io/tags/Machine-Learning/"/>
+    
+      <category term="Projects" scheme="http://wattlebird.github.io/categories/Projects/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[欧拉回路]]></title>
     <link href="http://wattlebird.github.io/2015/06/28/%E6%AC%A7%E6%8B%89%E8%B7%AF/"/>
     <id>http://wattlebird.github.io/2015/06/28/欧拉路/</id>
-    <published>2015-06-28T15:16:31.000Z</published>
-    <updated>2015-06-28T20:44:15.558Z</updated>
+    <published>2015-06-28T09:16:31.000Z</published>
+    <updated>2015-06-28T20:44:14.000Z</updated>
     <content type="html"><![CDATA[<p>今天讨论的主题是一类问题，就是欧拉路问题。有两种欧拉路。第一种叫做 Eulerian path(trail)，沿着这条路径走能够走遍图中每一条边；第二种叫做 Eularian cycle，沿着这条路径走，不仅能走遍图中每一条边，而且起点和终点都是同一个顶点。注意：欧拉路要求每条边只能走一次，但是对顶点经过的次数没有限制。</p>
 <p>满足什么性质的图才能有欧拉路？根据 <a href="https://en.wikipedia.org/wiki/Eulerian_path" target="_blank" rel="external">wikipedia</a> 对欧拉路的介绍：</p>
 <ul>
@@ -67,8 +200,8 @@
     <title><![CDATA[分解质因数]]></title>
     <link href="http://wattlebird.github.io/2015/05/25/%E5%88%86%E8%A7%A3%E8%B4%A8%E5%9B%A0%E6%95%B0/"/>
     <id>http://wattlebird.github.io/2015/05/25/分解质因数/</id>
-    <published>2015-05-25T14:38:22.000Z</published>
-    <updated>2015-05-25T15:39:33.902Z</updated>
+    <published>2015-05-25T08:38:22.000Z</published>
+    <updated>2015-05-25T15:39:32.000Z</updated>
     <content type="html"><![CDATA[<p>今天要说的题目来源于 <a href="http://codeforces.com/contest/546/problem/D" target="_blank" rel="external">Soldier and Number Game</a>. 这道题到底干什么呢，说白了就是求两个数$1 \le b \le a \le 5 000 000$之间的所有数的质因数数目之和。快速求解一个数的质因数数目是这道题的关键。</p>
 <p><a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes" target="_blank" rel="external">Sieve of Eratosthenes</a> 是这道题的关键。这是一个求解质数/质数判定的方法，其思想是筛选出一个质数的整数倍，质数的整数倍必然不是质数，所以都被筛选出去。在没有筛选的结果中继续求解当前最小数字的整数倍，直至筛完为止。其 C++ 代码如下所示：</p>
 <figure class="highlight cpp"><figcaption><span>Sieve of Eratosthenes</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// prime number table from 2 to 5000000</span></span><br><span class="line"><span class="comment">// those who have number 0 are prime numbers.</span></span><br><span class="line"><span class="keyword">int</span> table[<span class="number">5000001</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_table</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> limit = <span class="built_in">sqrt</span>(<span class="number">5000000</span>)+<span class="number">1</span>;</span><br><span class="line">    table[<span class="number">0</span>]=table[<span class="number">1</span>]=-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=limit; i++)</span><br><span class="line">        <span class="keyword">if</span>(!table[i])</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">2</span>; j*i&lt;=<span class="number">5000000</span>; j++)</span><br><span class="line">                table[i*j]=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isprime</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;<span class="keyword">return</span> !table[i];&#125;</span><br></pre></td></tr></table></figure>
@@ -93,8 +226,8 @@
     <title><![CDATA[Combination Sum]]></title>
     <link href="http://wattlebird.github.io/2015/04/26/Combination-Sum/"/>
     <id>http://wattlebird.github.io/2015/04/26/Combination-Sum/</id>
-    <published>2015-04-26T10:08:44.000Z</published>
-    <updated>2015-05-01T19:23:24.914Z</updated>
+    <published>2015-04-26T04:08:44.000Z</published>
+    <updated>2015-05-01T19:23:24.000Z</updated>
     <content type="html"><![CDATA[<p>Combination sum <a href="https://leetcode.com/problems/combination-sum/" target="_blank" rel="external">1</a> and <a href="https://leetcode.com/problems/combination-sum-ii/" target="_blank" rel="external">2</a> 是 Leetcode 上面两道比较相似的题目。今天写这个题目是因为这个题目有不同的解法。</p>
 <p>这两道题目都是给定一组数，给定一个 target，然后求出这组数中哪几个可以组合成 target。不同的地方是，第一道题要求数字可以被重复利用以组合成 target；第二道题要求数字不可以被重复利用。Seems easy, hmm?</p>
 <p>首先说说我的想法和做法。首先通过观察可以得知，求一个 target 的 combination 可以被拆分成给定某个已知数的剩下数值的 combination 的子问题。于是乎，可以在确定一个 candidate 的同时试图解决这个子问题，子问题应该返回一个所有解的列表，把该 candidate 加入所有解的尾部即可。</p>
@@ -130,8 +263,8 @@
     <title><![CDATA[How I build up Chi: 同步率改 v0.3 实现细节]]></title>
     <link href="http://wattlebird.github.io/2015/03/08/How-I-build-up-Chi-%E5%90%8C%E6%AD%A5%E7%8E%87%E6%94%B9-v0-3-%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82/"/>
     <id>http://wattlebird.github.io/2015/03/08/How-I-build-up-Chi-同步率改-v0-3-实现细节/</id>
-    <published>2015-03-08T00:57:46.000Z</published>
-    <updated>2015-05-01T20:42:02.218Z</updated>
+    <published>2015-03-07T17:57:46.000Z</published>
+    <updated>2015-05-01T20:42:02.000Z</updated>
     <content type="html"><![CDATA[<p>　　我想我已经好久都没写日志了，因为每天都会学到太多的新东西，虽然想记录下来，但实在是有心无力——太耗时间。不过我想仍然有里程碑意义的成果必须记录下来。这个<a href="http://ikely.me/chi/similarity" target="_blank" rel="external">同步率改 v0.3</a> 就是一个。</p>
 <p>　　Bangumi 番组计划有一个可以内置的查看用户间同步率的功能，但是这个功能很简陋，也很不科学。我通过爬取 Bangumi 用户作品收藏信息，计算出了比较科学一点的同步率，使得品味相近的用户可以互相认识。</p>
 <p>　　稍有常识的人就会看出，这实际上就是一个推荐系统嘛：推荐与你相似的用户。但是目前的同步率改不能完全算是一个推荐系统，只能说起到了某些推荐系统的功能而已。现在的“同步率改”之所以还保留着“同步率”的称法，是为了让 BGMer 在旧同步率和新同步率之间保持无缝概念接受：如果我没有标注某部作品，那么这部作品不应该在同步率上有所贡献。所以在到目前为止，所有的同步率计算都是在作品空间中进行的而非概念空间。</p>
@@ -181,8 +314,8 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
     <title><![CDATA[Misha and Permutations Summation]]></title>
     <link href="http://wattlebird.github.io/2015/01/17/Misha-and-Permutations-Summation/"/>
     <id>http://wattlebird.github.io/2015/01/17/Misha-and-Permutations-Summation/</id>
-    <published>2015-01-17T00:01:14.000Z</published>
-    <updated>2015-05-01T20:41:55.918Z</updated>
+    <published>2015-01-16T17:01:14.000Z</published>
+    <updated>2015-05-01T20:41:54.000Z</updated>
     <content type="html"><![CDATA[<p>　　此题为 CF 上的一道中等难度题。题目的原文见<a href="http://codeforces.com/contest/501/problem/D" target="_blank" rel="external">这里</a>。用中文简单说一下吧：给定0到N-1的两个排列，求这两个排列的“和”。之所以会有“和”的概念出现，是因为排列的大小可以依据字典序确定。</p>
 <p>　　所以，解决这个问题需要的两个关键步骤是：根据排列确定字典序大小；根据字典序大小还原排列。</p>
 <p>　　一个排列和其字典序大小是有某种确定关系的。<a href="https://en.wikipedia.org/wiki/Factorial_number_system" target="_blank" rel="external">Factorial number system</a> 就这种关系给出了理论支持。这种关系，是一种可以一一对应并且互相转换的关系。比如说，当 N=3 的时候，所有的排列和其字典序大小关系如下所示：</p>
@@ -316,8 +449,8 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
     <title><![CDATA[OJ 总结(Depricated)]]></title>
     <link href="http://wattlebird.github.io/2015/01/03/OJ-%E6%80%BB%E7%BB%93-Depricated/"/>
     <id>http://wattlebird.github.io/2015/01/03/OJ-总结-Depricated/</id>
-    <published>2015-01-02T23:00:00.000Z</published>
-    <updated>2015-05-01T21:31:01.164Z</updated>
+    <published>2015-01-02T16:00:00.000Z</published>
+    <updated>2015-05-01T21:31:00.000Z</updated>
     <content type="html"><![CDATA[<h3 id="2015-01-04">2015.01.04</h3><p><a href="https://oj.leetcode.com/problems/search-insert-position/" target="_blank" rel="external">Simple Binary Search</a></p>
 <p>题目大意就是一种更好的 Binary Search，在一个已经排好序的数组里面找到 target，返回 target 索引。如果找不到，那么就返回 target 应该插入的位置。</p>
 <p>我觉得还是 <em>Acclerated C++</em> 那本书给了我很多启示。Binary  search 的搜索区间看作是一个左闭右开区间，每次迭代的过程中，不变的准则是：区间的右边是开区间。这样可以省去考虑中间点恰好是 target 的麻烦。这样做的好处除了省去中间点的考量外，也省略掉了尾端的考虑：在 C 语言中，整数类型向 0 取整，所以 4 是 end 的话，所有小于 4 的数与之相加除以 2 的结果都必然小于 4。</p>
@@ -343,8 +476,8 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
     <title><![CDATA[Game Theory Note - week 3]]></title>
     <link href="http://wattlebird.github.io/2014/11/01/Game-Theory-Note-week-3/"/>
     <id>http://wattlebird.github.io/2014/11/01/Game-Theory-Note-week-3/</id>
-    <published>2014-10-31T23:00:00.000Z</published>
-    <updated>2015-05-01T20:21:16.760Z</updated>
+    <published>2014-10-31T16:00:00.000Z</published>
+    <updated>2015-05-01T20:21:16.000Z</updated>
     <content type="html"><![CDATA[<p>This week’s material is dedicated to concepts “beyond Nash Equilibrium”: iterative removal of strictly dominated strategies, minimax strategies and the minimax theorem for zero-sum game, correlated equilibria.</p>
 <p>Different from previous weeks’ notes, I will illustrate some concepts in Chinese.</p>
 <h2 id="Dominated_Strategies">Dominated Strategies</h2><p>Strictly dominated strategies are based on every player’s rationality: that is, everybody is rational, and everybody knows other players make rational decisions, and everybody knows that also… So, those strategies that are strictly dominated are to be dominated. We can get final strategy by using iterated removal.</p>
@@ -418,8 +551,8 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
     <title><![CDATA[Game Theory Note - week 2]]></title>
     <link href="http://wattlebird.github.io/2014/10/18/Game-Theory-Note-week-2/"/>
     <id>http://wattlebird.github.io/2014/10/18/Game-Theory-Note-week-2/</id>
-    <published>2014-10-17T22:00:00.000Z</published>
-    <updated>2015-05-01T20:21:25.184Z</updated>
+    <published>2014-10-17T16:00:00.000Z</published>
+    <updated>2015-05-01T20:21:24.000Z</updated>
     <content type="html"><![CDATA[<p>This week’s Game Theory is dedicated to Mixed-Strategy Nash Equilibrium.</p>
 <p>Mixed strategy, different from pure strategy, means that players can choose an action according to a specific probability distribution (among all possible actions). The following concepts and definitions all derives from this idea:</p>
 <p>Strategy $s_i$<br>: any probability distribution over the actions $A_i$ for agent i.</p>
@@ -455,8 +588,8 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
     <title><![CDATA[Game Theory Note - week 1]]></title>
     <link href="http://wattlebird.github.io/2014/10/12/Game-Theory-Note-week-1/"/>
     <id>http://wattlebird.github.io/2014/10/12/Game-Theory-Note-week-1/</id>
-    <published>2014-10-11T22:00:00.000Z</published>
-    <updated>2015-05-01T20:00:57.126Z</updated>
+    <published>2014-10-11T16:00:00.000Z</published>
+    <updated>2015-05-01T20:00:56.000Z</updated>
     <content type="html"><![CDATA[<p>This week’s game theory was dedicated to introduction, overview, uses of game theory, some applications and examples, and formal definitions of: the normal form, payoffs, strategies, pure strategy Nash equilibrium, dominant strategies..</p>
 <h2 id="Define_a_Game">Define a Game</h2><ol>
 <li>Normal form: List what payoffs get as a function of their actions.</li>
@@ -520,8 +653,8 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
     <title><![CDATA[一种树的表达法]]></title>
     <link href="http://wattlebird.github.io/2014/10/04/%E4%B8%80%E7%A7%8D%E6%A0%91%E7%9A%84%E8%A1%A8%E8%BE%BE%E6%B3%95/"/>
     <id>http://wattlebird.github.io/2014/10/04/一种树的表达法/</id>
-    <published>2014-10-03T22:00:00.000Z</published>
-    <updated>2015-05-01T21:28:19.240Z</updated>
+    <published>2014-10-03T16:00:00.000Z</published>
+    <updated>2015-05-01T21:28:18.000Z</updated>
     <content type="html"><![CDATA[<p>《算法导论》教导我们，图有两种表达方法：邻接链表和邻接矩阵。至少是对于有环的图来说，的确是这样。对于树和图究竟怎样表达最好，我一直都在摸索之中。以前在写与图有关的算法的时候，总是要把整个邻接链表（通常是一个很大的<code>std::vector&lt;std::list&lt;T&gt;&gt;&amp;</code>）当作参数的一部分送进去。这样看着就很别扭，但是这确实是严格按照《算法导论》的定义实现的。</p>
 <p>因此我对我的代码质量深表担忧。但是幸运的是，最近我开始学习起别人的代码，从中获得了一些启示。今天总结的是这么一种特殊的图————自由树的表达方法。这种方法高效，无论是从时间上还是空间上。</p>
 <p>假定现在给出一系列树边，每行一条树边记录，由两个数组成。第一个数代表父结点，第二个数代表子结点。这一系列树边可以组成一棵树（或一片森林）。对于这样的信息，利用下面这种方法可以给出高效的表达。</p>
@@ -564,8 +697,8 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
     <title><![CDATA[树的直径]]></title>
     <link href="http://wattlebird.github.io/2014/09/21/%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/"/>
     <id>http://wattlebird.github.io/2014/09/21/树的直径/</id>
-    <published>2014-09-20T22:00:00.000Z</published>
-    <updated>2015-05-01T21:10:30.306Z</updated>
+    <published>2014-09-20T16:00:00.000Z</published>
+    <updated>2015-05-01T21:10:30.000Z</updated>
     <content type="html"><![CDATA[<p>求一个自由树的直径。对于直径，《算法导论》第三版 349 页练习 22.2-8 上面这么定义道：</p>
 <blockquote>
 <p>树中所有最短路径的最大值即为树的直径。</p>
@@ -622,8 +755,8 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
     <title><![CDATA[二叉搜索树与快速排序的内在相似性]]></title>
     <link href="http://wattlebird.github.io/2014/07/27/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E5%86%85%E5%9C%A8%E7%9B%B8%E4%BC%BC%E6%80%A7/"/>
     <id>http://wattlebird.github.io/2014/07/27/二叉搜索树与快速排序的内在相似性/</id>
-    <published>2014-07-26T22:00:00.000Z</published>
-    <updated>2015-05-01T21:04:31.216Z</updated>
+    <published>2014-07-26T16:00:00.000Z</published>
+    <updated>2015-05-01T21:04:30.000Z</updated>
     <content type="html"><![CDATA[<p>对我来说，对随机事件的分析，恐怕是最难的。我原以为我数学学得还可以，直到我遇上了随机过程。这篇 blog 所讲的是算法分析，其中涉及到大量对随机情况的分析。因此我在此将其梳理一下，特别注重挖掘不同算法之间的分析过程的相似性。</p>
 <p>快速排序是一种原址排序方法，随机化的快排具有 <em>O(nlgn)</em> 的期望运行时间。这个在《算法导论》（第三版）的 7.4.2 节中有一个以比较操作为中心的证明方法。这个证明的核心思想就是：快速排序是由多次 partition 过程组成的，因此关键问题就在于获得 partition 过程的运行时间和运行 partition 过程的次数。partition 过程的最大运行次数是 n-1 次，可以记为 <em>O(n)</em> ，对于其运行时间，练习 7.1-3 给出的结论是 <em>Θ(n)</em> 。这样乍一算，似乎是 <em>O($n^2$)</em> 的时间复杂度。这样计算是错误的，因为 partition 的时间复杂度与其长度有关。这里，我们需要更为细致的分析。决定 partition 运行时间的是其内部循环次数。这个循环次数可以统计每次必须运行的比较次数而得到。通过计算整个 quicksort 的比较次数，我们就可以得到真正的 partition 循环次数。而这个比较次数的期望值，可以通过拆分成示性随机变量相加得到。这个分析的精华之处就在于分析出每两个元素进行比较的概率。很有意思，可以进行比较的组合是 <em>Θ($n^2$)</em> ，但是最终全部比较次数的期望是 <em>O(n lgn)</em> 。</p>
 <p>当然这个只是作为复习，不是今天的重点。这个方法实在是太不直观了点。这次我们用类似于 merge-sort 的分析方法进行分析。</p>
@@ -672,8 +805,8 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
     <title><![CDATA[简单易懂的XML parsing——Qt篇]]></title>
     <link href="http://wattlebird.github.io/2014/05/30/%E7%AE%80%E5%8D%95%E6%98%93%E6%87%82%E7%9A%84XML-parsing%E2%80%94%E2%80%94Qt%E7%AF%87/"/>
     <id>http://wattlebird.github.io/2014/05/30/简单易懂的XML-parsing——Qt篇/</id>
-    <published>2014-05-29T22:00:00.000Z</published>
-    <updated>2015-05-01T21:22:07.518Z</updated>
+    <published>2014-05-29T16:00:00.000Z</published>
+    <updated>2015-05-01T21:22:06.000Z</updated>
     <content type="html"><![CDATA[<p>关于XML的文章我先前写过一篇。之后就再也没写过。原因是很简单的。虽然那篇文章是用Matlab的代码说明XML解析，但是XML的基本概念都是一致的，我也没必要再就C++或是Python等语言再写一遍在其他语言下面怎么用其他的库解析XML，都是大同小异。</p>
 <p>可是这个世界上奇葩比较多。最近在做《网络通信原理》的project的时候，用到了Qt里面的QXmlStreamReader。有意思的是，这个东西不按常理出牌。为说明这个特性，我引用Qt 5关于QXmlStreamReader上面的一段话：</p>
 <blockquote>
@@ -711,8 +844,8 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
     <title><![CDATA[简单易懂的XML parsing]]></title>
     <link href="http://wattlebird.github.io/2014/03/11/%E7%AE%80%E5%8D%95%E6%98%93%E6%87%82%E7%9A%84XML-parsing/"/>
     <id>http://wattlebird.github.io/2014/03/11/简单易懂的XML-parsing/</id>
-    <published>2014-03-10T23:00:00.000Z</published>
-    <updated>2015-05-01T21:18:14.149Z</updated>
+    <published>2014-03-10T16:00:00.000Z</published>
+    <updated>2015-05-01T21:18:14.000Z</updated>
     <content type="html"><![CDATA[<p>读取一个XML文件，返回一个DOM对象。</p>
 <p>什么是DOM对象？全称为Document Object Model, XML文件中的每一个东西都对应为一个node。DOM node的属性和方法遵循国际互联网的标准。</p>
 <p>有以下类型的nodes：</p>
@@ -762,8 +895,8 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
     <title><![CDATA[简单易懂的Sublime Text 2]]></title>
     <link href="http://wattlebird.github.io/2014/02/04/%E7%AE%80%E5%8D%95%E6%98%93%E6%87%82%E7%9A%84Sublime-Text-2/"/>
     <id>http://wattlebird.github.io/2014/02/04/简单易懂的Sublime-Text-2/</id>
-    <published>2014-02-03T23:00:00.000Z</published>
-    <updated>2015-05-01T21:26:44.691Z</updated>
+    <published>2014-02-03T16:00:00.000Z</published>
+    <updated>2015-05-01T21:26:44.000Z</updated>
     <content type="html"><![CDATA[<p>由于这几天一看见Python自带的IDLE我就作呕，我觉得很有必要花点时间研究一下<a href="http://www.sublimetext.com/" target="_blank" rel="external">Sublime Text 2</a>。</p>
 <p>为什么要用Sublime Text 2？其实我也不知道。我第一次知道这个编辑器是在Azure的培训上。后来我发现，许多专业人士都非常推崇此编辑器。Sublime Text 2在Windows、Mac和Linux下都有相应的版本。</p>
 <p>如果你去看Sublime Text 2的主页，你会发现这个编辑器的最大优点就是多光标编辑。没有其他任何一个编辑器能做到这一点。</p>
@@ -804,11 +937,47 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
   </entry>
   
   <entry>
+    <title><![CDATA[坡道的起点——AWS上Wordpress建站小记]]></title>
+    <link href="http://wattlebird.github.io/2014/01/26/%E5%9D%A1%E9%81%93%E7%9A%84%E8%B5%B7%E7%82%B9%E2%80%94%E2%80%94AWS%E4%B8%8AWordpress%E5%BB%BA%E7%AB%99%E5%B0%8F%E8%AE%B0/"/>
+    <id>http://wattlebird.github.io/2014/01/26/坡道的起点——AWS上Wordpress建站小记/</id>
+    <published>2014-01-25T16:00:00.000Z</published>
+    <updated>2015-05-01T21:09:46.000Z</updated>
+    <content type="html"><![CDATA[<p>经过若干天的反复瞎搞，这个名为”Pursuing Freedom”的博客终于上线了。</p>
+<p>建立一个个人博客本来不是难事，只要你肯花钱。国内国外本来就有很多主机提供商，而且有些还是提供注册域名、服务器搭建的一条龙服务。但是Ike酱认为，有钱首先应该花在手办上，其他的能省就省～上个学期接受了一个Azure的培训，从那个培训中Ike酱得知现在云服务可以做很多事情。而且亚马逊的AWS在一定的使用范围内是免费的，这就提供了无限多的可能构造一个自由定制的主页。下面Ike将会把这次建站的各个方面记录一下，供以后参考。</p>
+<p>首先我们从AWS讲起。AWS全称Amazon Web Services。和Windows Azure一样，AWS提供了一系列云解决方案。在注册AWS用户的一年时间之内，可以在限定的范围内，免费使用AWS的部分服务。有关这些详情，请参考<a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-intro/gsg-aws-free-tier.html" target="_blank" rel="external">How Do I Get Started with the Free Usage Tier?</a>。</p>
+<p>有必要强调一点的是，注册AWS的账号需要一张国际信用卡。对于弊校学生来说，这还是一件比较容易办得到的事情，因为Ike常常见到食堂附近有建行的人在接受集体办卡。（Ike能说Ike拿到这个信用卡之后的第一件事就是开通了AWS账号么）</p>
+<p>建站的过程其实很简单，因为AWS的Documention上已经把步骤都写好了。概要地说，就是使用AWS EC2建立一台虚拟机，进行安全和账户控制，然后在这个虚拟机上安装各式各样的东西～怎样建立一个虚拟机的Instance，怎样通过远程终端连接上去，怎样配置Apache+PHP+MySQL，其实我不是Linux的专家，但是<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/" target="_blank" rel="external">Amazon EC2 User Guide</a>上面都说得一清二楚。别看文档有600页，其实建立个人博客只要前几页就够了。</p>
+<p>在这里整理一下，我参考文档的顺序是：<br>1. <a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-intro" target="_blank" rel="external">Getting Started with AWS</a><br>2. <a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-freetier/" target="_blank" rel="external">Getting Started with AWS Free Usage Tier</a><br>3. <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/" target="_blank" rel="external">Amazon EC2 User Guide</a><br>我并不想把这里面的内容再抄一遍放在这里来，说实在的，这一建站步骤唾手可得。</p>
+<p>在完成wordpress博客的创建之前，如果有任何问题，都可以归结到文档步骤没有仔细遵循的原因上。总体而言，建立wordpress博客的步骤要比Windows Azure复杂，但是也可以说Windows Azure忽略了许多重要的东西。</p>
+<p>但是，在建立了这个wordpress博客、并可以访问之后，是否说明真的可以用了呢？其实后续还有许多复杂的事情要做。</p>
+<p>首先就是虚拟机的权限设置问题。在EC2 UG里面，我们给虚拟机创建了一个名为www的group，理由是可以让ec2-user获得对/var/www/的修改权限。但是在实际中，光给ec2-user一个用户这些权限还不够。Wordpress程序可以进行插件的自动安装和自动更新，如果apache拿不到这些权限，Wordpress的更新和拓展都很麻烦。理论上说我们可以每次都登录虚拟机用ec2-user做这些事情，但这样大大提高了博客的使用门槛。</p>
+<p>其次，在UG里面没有提到ftp的设置。ftp会给个人网站的部署和更新带来很大便利。wordpress进行更新也需要用到ftp。</p>
+<p>关于这两个问题，我给ftp的user和服务器apache都加入到用户组www中，确认网站的根目录下对www都有读写权限。关于ftp的部署，我主要参考了<a href="http://www.chilltouch.com/2013/06/aws-ec2-ftp" target="_blank" rel="external">AWS EC2上架设 FTP</a>。</p>
+<p>但是真正麻烦的，是Wordpress服务器经常连接不上数据库的问题。虽然wp-config.php里面的参数都配置正确，但就是无法连接。这个博客其实是第三代博客，就是因为这个问题。一种可能的解决方案是重启虚拟机，但是发现有时候不可行。这个问题Ike参考了许多中外网站，总的来说都不适用。博客所维持时间的长短几乎就取决于什么时候出现这个数据库的问题。</p>
+<p>Ike对Linux只是略知皮毛，连鸟哥私房菜第一卷都没看完的战五渣，上面这些问题的解决真的是瞎搞，所以要是把详细的步骤写出来反而有误人子弟之嫌。所以说，建立了这个博客只是站在长长的坡道的起点，以后还要建设邮件系统之类的东西，还要有个像模像样的主页面，但在当前看来最重要的是把MySQL学会。</p>
+<p>域名的注册是在Godaddy上注册的，原来想用ikely.cc以暗示真名，或是ike.ly，但是.me的域名实在是便宜，10刀一年。域名前面原来有www，要去掉www很简单，只要在Godaddy的域名转发里面设置子域名转发就可以了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>经过若干天的反复瞎搞，这个名为”Pursuing Freedom”的博客终于上线了。</p>
+<p>建立一个个人博客本来不是难事，只要你肯花钱。国内国外本来就有很多主机提供商，而且有些还是提供注册域名、服务器搭建的一条龙服务。但是Ike酱认为，有钱首先应该花在手办上，其他的]]>
+    </summary>
+    
+      <category term="Backend" scheme="http://wattlebird.github.io/tags/Backend/"/>
+    
+      <category term="apache" scheme="http://wattlebird.github.io/tags/apache/"/>
+    
+      <category term="wordpress" scheme="http://wattlebird.github.io/tags/wordpress/"/>
+    
+      <category term="Projects" scheme="http://wattlebird.github.io/categories/Projects/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Permalink 404 Error 之解决方案]]></title>
     <link href="http://wattlebird.github.io/2014/01/26/Permalink-404-Error-%E4%B9%8B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
     <id>http://wattlebird.github.io/2014/01/26/Permalink-404-Error-之解决方案/</id>
-    <published>2014-01-25T23:00:00.000Z</published>
-    <updated>2015-05-01T20:55:19.786Z</updated>
+    <published>2014-01-25T16:00:00.000Z</published>
+    <updated>2015-05-01T20:55:18.000Z</updated>
     <content type="html"><![CDATA[<p>Ike本人在设置wordpress的时候，在settings里面发现了Permalink。从这个页面的主要介绍来看，Permalink的作用就是自定义文章的Link，使之更为结构化和友好。</p>
 <p>但是当Ike设置了某个除Default之外的某个Permalink的时候，如果点击一篇发表的文章，就会出现Page Not Found的404错误。</p>
 <p>经反复查证，Ike发现Permalink与.htaccess和Apache的设置紧密相关。</p>
@@ -843,47 +1012,11 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
   </entry>
   
   <entry>
-    <title><![CDATA[坡道的起点——AWS上Wordpress建站小记]]></title>
-    <link href="http://wattlebird.github.io/2014/01/26/%E5%9D%A1%E9%81%93%E7%9A%84%E8%B5%B7%E7%82%B9%E2%80%94%E2%80%94AWS%E4%B8%8AWordpress%E5%BB%BA%E7%AB%99%E5%B0%8F%E8%AE%B0/"/>
-    <id>http://wattlebird.github.io/2014/01/26/坡道的起点——AWS上Wordpress建站小记/</id>
-    <published>2014-01-25T23:00:00.000Z</published>
-    <updated>2015-05-01T21:09:46.098Z</updated>
-    <content type="html"><![CDATA[<p>经过若干天的反复瞎搞，这个名为”Pursuing Freedom”的博客终于上线了。</p>
-<p>建立一个个人博客本来不是难事，只要你肯花钱。国内国外本来就有很多主机提供商，而且有些还是提供注册域名、服务器搭建的一条龙服务。但是Ike酱认为，有钱首先应该花在手办上，其他的能省就省～上个学期接受了一个Azure的培训，从那个培训中Ike酱得知现在云服务可以做很多事情。而且亚马逊的AWS在一定的使用范围内是免费的，这就提供了无限多的可能构造一个自由定制的主页。下面Ike将会把这次建站的各个方面记录一下，供以后参考。</p>
-<p>首先我们从AWS讲起。AWS全称Amazon Web Services。和Windows Azure一样，AWS提供了一系列云解决方案。在注册AWS用户的一年时间之内，可以在限定的范围内，免费使用AWS的部分服务。有关这些详情，请参考<a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-intro/gsg-aws-free-tier.html" target="_blank" rel="external">How Do I Get Started with the Free Usage Tier?</a>。</p>
-<p>有必要强调一点的是，注册AWS的账号需要一张国际信用卡。对于弊校学生来说，这还是一件比较容易办得到的事情，因为Ike常常见到食堂附近有建行的人在接受集体办卡。（Ike能说Ike拿到这个信用卡之后的第一件事就是开通了AWS账号么）</p>
-<p>建站的过程其实很简单，因为AWS的Documention上已经把步骤都写好了。概要地说，就是使用AWS EC2建立一台虚拟机，进行安全和账户控制，然后在这个虚拟机上安装各式各样的东西～怎样建立一个虚拟机的Instance，怎样通过远程终端连接上去，怎样配置Apache+PHP+MySQL，其实我不是Linux的专家，但是<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/" target="_blank" rel="external">Amazon EC2 User Guide</a>上面都说得一清二楚。别看文档有600页，其实建立个人博客只要前几页就够了。</p>
-<p>在这里整理一下，我参考文档的顺序是：<br>1. <a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-intro" target="_blank" rel="external">Getting Started with AWS</a><br>2. <a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-freetier/" target="_blank" rel="external">Getting Started with AWS Free Usage Tier</a><br>3. <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/" target="_blank" rel="external">Amazon EC2 User Guide</a><br>我并不想把这里面的内容再抄一遍放在这里来，说实在的，这一建站步骤唾手可得。</p>
-<p>在完成wordpress博客的创建之前，如果有任何问题，都可以归结到文档步骤没有仔细遵循的原因上。总体而言，建立wordpress博客的步骤要比Windows Azure复杂，但是也可以说Windows Azure忽略了许多重要的东西。</p>
-<p>但是，在建立了这个wordpress博客、并可以访问之后，是否说明真的可以用了呢？其实后续还有许多复杂的事情要做。</p>
-<p>首先就是虚拟机的权限设置问题。在EC2 UG里面，我们给虚拟机创建了一个名为www的group，理由是可以让ec2-user获得对/var/www/的修改权限。但是在实际中，光给ec2-user一个用户这些权限还不够。Wordpress程序可以进行插件的自动安装和自动更新，如果apache拿不到这些权限，Wordpress的更新和拓展都很麻烦。理论上说我们可以每次都登录虚拟机用ec2-user做这些事情，但这样大大提高了博客的使用门槛。</p>
-<p>其次，在UG里面没有提到ftp的设置。ftp会给个人网站的部署和更新带来很大便利。wordpress进行更新也需要用到ftp。</p>
-<p>关于这两个问题，我给ftp的user和服务器apache都加入到用户组www中，确认网站的根目录下对www都有读写权限。关于ftp的部署，我主要参考了<a href="http://www.chilltouch.com/2013/06/aws-ec2-ftp" target="_blank" rel="external">AWS EC2上架设 FTP</a>。</p>
-<p>但是真正麻烦的，是Wordpress服务器经常连接不上数据库的问题。虽然wp-config.php里面的参数都配置正确，但就是无法连接。这个博客其实是第三代博客，就是因为这个问题。一种可能的解决方案是重启虚拟机，但是发现有时候不可行。这个问题Ike参考了许多中外网站，总的来说都不适用。博客所维持时间的长短几乎就取决于什么时候出现这个数据库的问题。</p>
-<p>Ike对Linux只是略知皮毛，连鸟哥私房菜第一卷都没看完的战五渣，上面这些问题的解决真的是瞎搞，所以要是把详细的步骤写出来反而有误人子弟之嫌。所以说，建立了这个博客只是站在长长的坡道的起点，以后还要建设邮件系统之类的东西，还要有个像模像样的主页面，但在当前看来最重要的是把MySQL学会。</p>
-<p>域名的注册是在Godaddy上注册的，原来想用ikely.cc以暗示真名，或是ike.ly，但是.me的域名实在是便宜，10刀一年。域名前面原来有www，要去掉www很简单，只要在Godaddy的域名转发里面设置子域名转发就可以了。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>经过若干天的反复瞎搞，这个名为”Pursuing Freedom”的博客终于上线了。</p>
-<p>建立一个个人博客本来不是难事，只要你肯花钱。国内国外本来就有很多主机提供商，而且有些还是提供注册域名、服务器搭建的一条龙服务。但是Ike酱认为，有钱首先应该花在手办上，其他的]]>
-    </summary>
-    
-      <category term="Backend" scheme="http://wattlebird.github.io/tags/Backend/"/>
-    
-      <category term="apache" scheme="http://wattlebird.github.io/tags/apache/"/>
-    
-      <category term="wordpress" scheme="http://wattlebird.github.io/tags/wordpress/"/>
-    
-      <category term="Projects" scheme="http://wattlebird.github.io/categories/Projects/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[关于 CUDA 中 reduction 运算的优化]]></title>
     <link href="http://wattlebird.github.io/2013/07/20/%E5%85%B3%E4%BA%8E-CUDA-%E4%B8%AD-reduction-%E8%BF%90%E7%AE%97%E7%9A%84%E4%BC%98%E5%8C%96/"/>
     <id>http://wattlebird.github.io/2013/07/20/关于-CUDA-中-reduction-运算的优化/</id>
-    <published>2013-07-19T22:00:00.000Z</published>
-    <updated>2015-05-01T21:09:14.306Z</updated>
+    <published>2013-07-19T16:00:00.000Z</published>
+    <updated>2015-05-01T21:09:14.000Z</updated>
     <content type="html"><![CDATA[<p>最近在Udacity上学习有关基于CUDA的并行运算。在学习当中除了Udacity上面所给的资源以外，我本人还查找了很多其他资料。我计划把我所查找到的这些资料写成技术blog，以供以后查阅。</p>
 <p>在Unit 3当中，讲到了三种常见的并行运算：reduce、scan和histogram。简单地讲，reduce运算的输入是一个数据集，和一个运算符（二值，结合性），输出为一个数据，其为数据集中的数据依次与运算符相作用后的结果，如求和、求最大值、求最小值都是reduce. Scan运算的输入是一个数组，一个二值运算符和一个identity element. 这个identity element正如0之于加，1之于乘。常见的scan运算为求累积概率。当然我这种说法很不科学，只要能意会就行了。</p>
 <p>最常见的reduce算法就是利用了完全二叉树的结构，分两步完成：</p>
