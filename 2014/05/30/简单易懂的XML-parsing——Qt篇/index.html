@@ -25,9 +25,11 @@
     <link href="/favicon.png" rel="icon">
   
 
-  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -50,16 +52,16 @@
 
 </head>
 
- <body>  
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+ <body>
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
+	<span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class="navbar-brand" href="/">Dedication</a>
+       <a class="navbar-brand" href="/">Dedication</a>
       <div class="collapse navbar-collapse nav-menu">
 		<ul class="nav navbar-nav">
 		  
@@ -99,24 +101,28 @@
 
 
 	
-		<div class="page-header">		
-			<h1> 简单易懂的XML parsing——Qt篇</h1>
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 简单易懂的XML parsing——Qt篇</h1>
 		</div>		
 	
+
+
+
 
 
 
 <div class="row post">
 	<!-- cols -->
 	
+	<div id="top_meta"></div>
 	<div class="col-md-9">
 	
 
-			
-
 	<!-- content -->
 	<div class="mypage">		
-	    <p>关于XML的文章我先前写过一篇。之后就再也没写过。原因是很简单的。虽然那篇文章是用Matlab的代码说明XML解析，但是XML的基本概念都是一致的，我也没必要再就C++或是Python等语言再写一遍在其他语言下面怎么用其他的库解析XML，都是大同小异。</p>
+	  		
+
+	  <p>关于XML的文章我先前写过一篇。之后就再也没写过。原因是很简单的。虽然那篇文章是用Matlab的代码说明XML解析，但是XML的基本概念都是一致的，我也没必要再就C++或是Python等语言再写一遍在其他语言下面怎么用其他的库解析XML，都是大同小异。</p>
 <p>可是这个世界上奇葩比较多。最近在做《网络通信原理》的project的时候，用到了Qt里面的QXmlStreamReader。有意思的是，这个东西不按常理出牌。为说明这个特性，我引用Qt 5关于QXmlStreamReader上面的一段话：</p>
 <blockquote>
 <p>QXmlStreamReader is an incremental parser. It can handle the case where the document can’t be parsed all at once because it arrives in chunks (e.g. from multiple files, or over a network connection).<br>…<br>QXmlStreamReader is memory-conservative by design, since it doesn’t store the entire XML document tree in memory, but only the current token at the time it is reported.</p>
@@ -158,6 +164,14 @@
 
     </center>
 	</div>
+
+    <!-- share -->
+    
+        
+
+        
+
+    
 	
 	<!-- comment -->
 	
@@ -171,11 +185,11 @@
   
 </section>
 
-	
 	</div> <!-- col-md-9/col-md-12 -->
+		
 	
-	
-		<div class="col-md-3"> 
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
 
 	<!-- date -->
 	
@@ -219,29 +233,10 @@
 	
 </div><!-- col-md-3 -->
 
-	
+	</div>
+		
 
 </div><!-- row -->
-
-	</div>
-  </div>
-  <div class="container-narrow">
-  <footer> <p>
-  &copy; 2016 Ronnie Wang
-  
-      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
-</p> </footer>
-</div> <!-- container-narrow -->
-  
-<a id="gotop" href="#">   
-  <span>▲</span> 
-</a>
-
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/main.js"></script>
-
 
 <script type="text/javascript">
 var disqus_shortname = 'wattlebirdgithubio';
@@ -255,6 +250,31 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 Ronnie Wang
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
@@ -264,7 +284,17 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
-<!-- mathjax config similar to math.stackexchange -->
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+  <!-- mathjax config similar to math.stackexchange -->
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({

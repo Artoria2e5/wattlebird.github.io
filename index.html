@@ -25,9 +25,11 @@
     <link href="/favicon.png" rel="icon">
   
 
-  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -50,16 +52,16 @@
 
 </head>
 
- <body>  
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+ <body>
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
+	<span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class="navbar-brand" href="/">Dedication</a>
+       <a class="navbar-brand" href="/">Dedication</a>
       <div class="collapse navbar-collapse nav-menu">
 		<ul class="nav navbar-nav">
 		  
@@ -95,8 +97,8 @@
 
   <div class="container">
   	<div class="content">
-    	 <div class="page-header">
-  <h1>Dedication</h1>
+    	 <div class="page-header page-header-inverse ">
+  <h1 class="title title-inverse ">Dedication</h1>
 </div>
 
 <div class="row page">
@@ -109,7 +111,7 @@
       <i class="fa fa-heart"></i>
       You tell me I&#39;m wrong. Then you&#39;d better prove you&#39;re right.
 </div>    
-
+		<div id="top_search"></div>
 		<div class="mypage">
 		
 		<!-- title and entry -->
@@ -126,11 +128,9 @@
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p><a href="https://github.com/wattlebird/ranking" target="_blank" rel="external">rankit</a> 是一个使用线性代数和最优化理论为基础的常见排名算法库。这个库是我写的。我说“常见”其实对于绝大部分人来说根本就闻所未闻，但是对于专门研究排名的研究者来说，这里面包含的算法都是比较基础的。自从阅读了一本介绍排名的书籍<a href="https://book.douban.com/subject/25915707/" target="_blank" rel="external">《谁排第一？关于评价和排序的科学》</a>之后，我觉得很有必要把这里面的宝藏介绍给对此一无所知的研究者。作为一个做与机器学习相关研究的研究生，竟然除了 PageRank 和 HITS 其他排名算法一个都没有听说过——课上不教，研究也涉及不到——因为生活中应用这些排名算法的场景，实在是很少接触到。然而，这些排名算法正在美国的体育比赛排名中大行其道。在那本书中，大部分案例直接来源于美国的橄榄球比赛排名。</p>
+	
+		<p><a href="https://github.com/wattlebird/ranking" target="_blank" rel="external">rankit</a> 是一个使用线性代数和最优化理论为基础的常见排名算法库。这个库是我写的。我说“常见”其实对于绝大部分人来说根本就闻所未闻，但是对于专门研究排名的研究者来说，这里面包含的算法都是比较基础的。自从阅读了一本介绍排名的书籍<a href="https://book.douban.com/subject/25915707/" target="_blank" rel="external">《谁排第一？关于评价和排序的科学》</a>之后，我觉得很有必要把这里面的宝藏介绍给对此一无所知的研究者。作为一个做与机器学习相关研究的研究生，竟然除了 PageRank 和 HITS 其他排名算法一个都没有听说过——课上不教，研究也涉及不到——因为生活中应用这些排名算法的场景，实在是很少接触到。然而，这些排名算法正在美国的体育比赛排名中大行其道。在那本书中，大部分案例直接来源于美国的橄榄球比赛排名。</p>
 <p>然而要我把这本书里面所有的算法都介绍出来，实在是一件难事，一是有侵犯版权的嫌疑，二是其中涉及到大量的数学推导。我在此也只能简单地说一下。每一个排名（rank）由一个既定的评分（rating）产生，评分可以被解释为被排名对象的实力。在一定数学模型的指导下，被排名对象产生了比赛结果。这时候，可以看作 rating 这一因素导致了外在的比赛结果的观测值，这和 state 与 observation 的关系是一样的。根据不同的数学模型，就有了不同的 rating 算法。另外还有一个排名算法不依靠于 rating 数值，它试图给出一个 ranking，使得该排名与比赛的结果最为相符，说白了就是 linear ordering problem.</p>
 <p>那么这种排名算法对我们有什么启示呢？现实生活中好像没有多少排名问题能够用被排名对象之间的比赛来表达啊。搜索引擎的网页排名能用 in-link 和 out-link 表达网页之间的关系，但是网页之间怎么进行比赛呢？事实上，这本书能够拓宽人的眼界的地方就在于此。如果在一个网页排名结果中，网页点击量的大小可以视作在这一场比赛中的结果。网页流量的大小也是网页实力的一个外在特征。在商品排名中，同时购买两件商品的人的评分综合也可以被视为两件商品比赛的结果。事实上，我们应该抛弃“比赛”这种概念，对两个排名对象在同等条件下比较的结果进行 fitting 要远远稳定于计算一个平均分，或是加权平均的结果。</p>
 <h2 id="小白怎样使用_rankit？">小白怎样使用 rankit？</h2><p>rankit 提供了 Converter，只要用户能提供排名对象的每一轮的比赛结果（用 pandas.DataFrame 表示并包含特定的 columns），就能够为后续的算法计算出矩阵。在不同的数学模型下，需要的观测值就会有所不同。每一个算法都有它的物理意义，那么使用某一个算法要使用与其物理意义相对应的矩阵。比如说对于 MarkovRank 来说，这种算法需要表示排名对象之间相互投票的结果。我在 rankit 里面专门提供了 RateDifferenceVoteMatrix，SimpleDifferenceVoteMatrix 和 RateVoteMatrix 把观测到的评分结果表示成这样的矩阵。对于算法适用于什么样的矩阵这个问题，我在 rankit 的 GitHub 主页上面已经给出了参考表格。</p>
@@ -249,10 +249,7 @@
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2016/02/05/使用-rankit-构建更科学的排名/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2016/02/05/使用-rankit-构建更科学的排名/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -268,11 +265,9 @@
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p>今天讨论的主题是一类问题，就是欧拉路问题。有两种欧拉路。第一种叫做 Eulerian path(trail)，沿着这条路径走能够走遍图中每一条边；第二种叫做 Eularian cycle，沿着这条路径走，不仅能走遍图中每一条边，而且起点和终点都是同一个顶点。注意：欧拉路要求每条边只能走一次，但是对顶点经过的次数没有限制。</p>
+	
+		<p>今天讨论的主题是一类问题，就是欧拉路问题。有两种欧拉路。第一种叫做 Eulerian path(trail)，沿着这条路径走能够走遍图中每一条边；第二种叫做 Eularian cycle，沿着这条路径走，不仅能走遍图中每一条边，而且起点和终点都是同一个顶点。注意：欧拉路要求每条边只能走一次，但是对顶点经过的次数没有限制。</p>
 <p>满足什么性质的图才能有欧拉路？根据 <a href="https://en.wikipedia.org/wiki/Eulerian_path" target="_blank" rel="external">wikipedia</a> 对欧拉路的介绍：</p>
 <ul>
 <li>在无向图中，所有顶点的度数均为偶，则存在 Eularian cycle；若有且仅有两个顶点的度数为奇，其余的都为偶，则存在 Eularian path；</li>
@@ -304,10 +299,7 @@
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2015/06/28/欧拉路/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2015/06/28/欧拉路/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -323,11 +315,9 @@
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p>今天要说的题目来源于 <a href="http://codeforces.com/contest/546/problem/D" target="_blank" rel="external">Soldier and Number Game</a>. 这道题到底干什么呢，说白了就是求两个数$1 \le b \le a \le 5 000 000$之间的所有数的质因数数目之和。快速求解一个数的质因数数目是这道题的关键。</p>
+	
+		<p>今天要说的题目来源于 <a href="http://codeforces.com/contest/546/problem/D" target="_blank" rel="external">Soldier and Number Game</a>. 这道题到底干什么呢，说白了就是求两个数$1 \le b \le a \le 5 000 000$之间的所有数的质因数数目之和。快速求解一个数的质因数数目是这道题的关键。</p>
 <p><a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes" target="_blank" rel="external">Sieve of Eratosthenes</a> 是这道题的关键。这是一个求解质数/质数判定的方法，其思想是筛选出一个质数的整数倍，质数的整数倍必然不是质数，所以都被筛选出去。在没有筛选的结果中继续求解当前最小数字的整数倍，直至筛完为止。其 C++ 代码如下所示：</p>
 <figure class="highlight cpp"><figcaption><span>Sieve of Eratosthenes</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// prime number table from 2 to 5000000</span></span><br><span class="line"><span class="comment">// those who have number 0 are prime numbers.</span></span><br><span class="line"><span class="keyword">int</span> table[<span class="number">5000001</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_table</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> limit = <span class="built_in">sqrt</span>(<span class="number">5000000</span>)+<span class="number">1</span>;</span><br><span class="line">    table[<span class="number">0</span>]=table[<span class="number">1</span>]=-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=limit; i++)</span><br><span class="line">        <span class="keyword">if</span>(!table[i])</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">2</span>; j*i&lt;=<span class="number">5000000</span>; j++)</span><br><span class="line">                table[i*j]=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isprime</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;<span class="keyword">return</span> !table[i];&#125;</span><br></pre></td></tr></table></figure>
 <p>你可以发现，在这个质数表中实际上还存储了每个数字的一个质因数。要提取出一个数的完整质因数分解，只要依据<s>基本法</s><code>a/=table[a]</code>不断迭代就可以了。</p>
@@ -337,10 +327,7 @@
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2015/05/25/分解质因数/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2015/05/25/分解质因数/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -356,11 +343,9 @@
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p>Combination sum <a href="https://leetcode.com/problems/combination-sum/" target="_blank" rel="external">1</a> and <a href="https://leetcode.com/problems/combination-sum-ii/" target="_blank" rel="external">2</a> 是 Leetcode 上面两道比较相似的题目。今天写这个题目是因为这个题目有不同的解法。</p>
+	
+		<p>Combination sum <a href="https://leetcode.com/problems/combination-sum/" target="_blank" rel="external">1</a> and <a href="https://leetcode.com/problems/combination-sum-ii/" target="_blank" rel="external">2</a> 是 Leetcode 上面两道比较相似的题目。今天写这个题目是因为这个题目有不同的解法。</p>
 <p>这两道题目都是给定一组数，给定一个 target，然后求出这组数中哪几个可以组合成 target。不同的地方是，第一道题要求数字可以被重复利用以组合成 target；第二道题要求数字不可以被重复利用。Seems easy, hmm?</p>
 <p>首先说说我的想法和做法。首先通过观察可以得知，求一个 target 的 combination 可以被拆分成给定某个已知数的剩下数值的 combination 的子问题。于是乎，可以在确定一个 candidate 的同时试图解决这个子问题，子问题应该返回一个所有解的列表，把该 candidate 加入所有解的尾部即可。</p>
 <p>那么怎么选取 candidate 呢？我们可以先对原候选数组进行排序，从最接近 target 的最大数开始筛选 candidate。</p>
@@ -381,10 +366,7 @@
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2015/04/26/Combination-Sum/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2015/04/26/Combination-Sum/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -400,11 +382,9 @@
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p>　　我想我已经好久都没写日志了，因为每天都会学到太多的新东西，虽然想记录下来，但实在是有心无力——太耗时间。不过我想仍然有里程碑意义的成果必须记录下来。这个<a href="http://ikely.me/chi/similarity" target="_blank" rel="external">同步率改 v0.3</a> 就是一个。</p>
+	
+		<p>　　我想我已经好久都没写日志了，因为每天都会学到太多的新东西，虽然想记录下来，但实在是有心无力——太耗时间。不过我想仍然有里程碑意义的成果必须记录下来。这个<a href="http://ikely.me/chi/similarity" target="_blank" rel="external">同步率改 v0.3</a> 就是一个。</p>
 <p>　　Bangumi 番组计划有一个可以内置的查看用户间同步率的功能，但是这个功能很简陋，也很不科学。我通过爬取 Bangumi 用户作品收藏信息，计算出了比较科学一点的同步率，使得品味相近的用户可以互相认识。</p>
 <p>　　稍有常识的人就会看出，这实际上就是一个推荐系统嘛：推荐与你相似的用户。但是目前的同步率改不能完全算是一个推荐系统，只能说起到了某些推荐系统的功能而已。现在的“同步率改”之所以还保留着“同步率”的称法，是为了让 BGMer 在旧同步率和新同步率之间保持无缝概念接受：如果我没有标注某部作品，那么这部作品不应该在同步率上有所贡献。所以在到目前为止，所有的同步率计算都是在作品空间中进行的而非概念空间。</p>
 <p>　　同步率改的 v0.2.1 版是一个比较基本的推荐系统实现：提取用户的所有评分并减去其平均值，得到用户对作品的偏好程度。同时对于用户没有评分的作品，利用这个作品所处于的五个状态——想看、在看、看过、搁置和抛弃——加上一定评分偏置。同时为了防止只有很少评分的用户影响系统表现，系统做了不少 trick，如评分在标准差在零点几以下的用户同步率无视评分、收藏小于 3 的用户无视评分等。这样的设计方法虽然整体思路是正确的，但是存在 ad hoc 太多、评分偏置单一的现象。</p>
@@ -441,10 +421,7 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2015/03/08/How-I-build-up-Chi-同步率改-v0-3-实现细节/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2015/03/08/How-I-build-up-Chi-同步率改-v0-3-实现细节/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -460,11 +437,9 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p>　　此题为 CF 上的一道中等难度题。题目的原文见<a href="http://codeforces.com/contest/501/problem/D" target="_blank" rel="external">这里</a>。用中文简单说一下吧：给定0到N-1的两个排列，求这两个排列的“和”。之所以会有“和”的概念出现，是因为排列的大小可以依据字典序确定。</p>
+	
+		<p>　　此题为 CF 上的一道中等难度题。题目的原文见<a href="http://codeforces.com/contest/501/problem/D" target="_blank" rel="external">这里</a>。用中文简单说一下吧：给定0到N-1的两个排列，求这两个排列的“和”。之所以会有“和”的概念出现，是因为排列的大小可以依据字典序确定。</p>
 <p>　　所以，解决这个问题需要的两个关键步骤是：根据排列确定字典序大小；根据字典序大小还原排列。</p>
 <p>　　一个排列和其字典序大小是有某种确定关系的。<a href="https://en.wikipedia.org/wiki/Factorial_number_system" target="_blank" rel="external">Factorial number system</a> 就这种关系给出了理论支持。这种关系，是一种可以一一对应并且互相转换的关系。比如说，当 N=3 的时候，所有的排列和其字典序大小关系如下所示：</p>
 <table>
@@ -583,10 +558,7 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2015/01/17/Misha-and-Permutations-Summation/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2015/01/17/Misha-and-Permutations-Summation/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -602,11 +574,9 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <h3 id="2015-01-04">2015.01.04</h3><p><a href="https://oj.leetcode.com/problems/search-insert-position/" target="_blank" rel="external">Simple Binary Search</a></p>
+	
+		<h3 id="2015-01-04">2015.01.04</h3><p><a href="https://oj.leetcode.com/problems/search-insert-position/" target="_blank" rel="external">Simple Binary Search</a></p>
 <p>题目大意就是一种更好的 Binary Search，在一个已经排好序的数组里面找到 target，返回 target 索引。如果找不到，那么就返回 target 应该插入的位置。</p>
 <p>我觉得还是 <em>Acclerated C++</em> 那本书给了我很多启示。Binary  search 的搜索区间看作是一个左闭右开区间，每次迭代的过程中，不变的准则是：区间的右边是开区间。这样可以省去考虑中间点恰好是 target 的麻烦。这样做的好处除了省去中间点的考量外，也省略掉了尾端的考虑：在 C 语言中，整数类型向 0 取整，所以 4 是 end 的话，所有小于 4 的数与之相加除以 2 的结果都必然小于 4。</p>
 <p>当然这样没考虑区间左端。有一种情况区间左端小于 target，这时候就简单地和等于的情况合并喽。</p>
@@ -617,10 +587,7 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2015/01/03/OJ-总结-Depricated/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2015/01/03/OJ-总结-Depricated/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -636,11 +603,9 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p>This week’s material is dedicated to concepts “beyond Nash Equilibrium”: iterative removal of strictly dominated strategies, minimax strategies and the minimax theorem for zero-sum game, correlated equilibria.</p>
+	
+		<p>This week’s material is dedicated to concepts “beyond Nash Equilibrium”: iterative removal of strictly dominated strategies, minimax strategies and the minimax theorem for zero-sum game, correlated equilibria.</p>
 <p>Different from previous weeks’ notes, I will illustrate some concepts in Chinese.</p>
 <h2 id="Dominated_Strategies">Dominated Strategies</h2><p>Strictly dominated strategies are based on every player’s rationality: that is, everybody is rational, and everybody knows other players make rational decisions, and everybody knows that also… So, those strategies that are strictly dominated are to be dominated. We can get final strategy by using iterated removal.</p>
 <h3 id="Example_1:_Prisoner’s_dilemma">Example 1: Prisoner’s dilemma</h3><table>
@@ -699,10 +664,7 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2014/11/01/Game-Theory-Note-week-3/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2014/11/01/Game-Theory-Note-week-3/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -718,11 +680,9 @@ Obj = \sum\left(r_{ij}-u_i v_j^T-bu_{is}-bi_{js}\right)^2+\frac{1}{2\sigma^2}\le
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p>This week’s Game Theory is dedicated to Mixed-Strategy Nash Equilibrium.</p>
+	
+		<p>This week’s Game Theory is dedicated to Mixed-Strategy Nash Equilibrium.</p>
 <p>Mixed strategy, different from pure strategy, means that players can choose an action according to a specific probability distribution (among all possible actions). The following concepts and definitions all derives from this idea:</p>
 <p>Strategy $s_i$<br>: any probability distribution over the actions $A_i$ for agent i.</p>
 <p>Pure strategy<br>: only one action is played with positive probability.</p>
@@ -742,10 +702,7 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2014/10/18/Game-Theory-Note-week-2/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2014/10/18/Game-Theory-Note-week-2/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -761,11 +718,9 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 
 			<div class="entry">
   <div class="row">
-  
-	<div class="col-md-12">
-	  
 	
-	  <p>This week’s game theory was dedicated to introduction, overview, uses of game theory, some applications and examples, and formal definitions of: the normal form, payoffs, strategies, pure strategy Nash equilibrium, dominant strategies..</p>
+	
+		<p>This week’s game theory was dedicated to introduction, overview, uses of game theory, some applications and examples, and formal definitions of: the normal form, payoffs, strategies, pure strategy Nash equilibrium, dominant strategies..</p>
 <h2 id="Define_a_Game">Define a Game</h2><ol>
 <li>Normal form: List what payoffs get as a function of their actions.</li>
 <li>Extensive form: Includes timing of moves, players moves sequentially, represented as a tree.</li>
@@ -814,10 +769,7 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 
 	
 	</div>
-	
-  
-</div>
-	<a type="button" href="/2014/10/12/Game-Theory-Note-week-1/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2014/10/12/Game-Theory-Note-week-1/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -854,12 +806,14 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 		<div class="col-md-3">
 	<div id="sidebar">
 	
-			<div class="form-group has-success has-feedback">
-  <form action="//google.com/search" method="get" accept-charset="utf-8" >
-    <input type="search" name="q" results="0" placeholder="搜索" class="form-control">
-    <input type="hidden" name="q" value="site:wattlebird.github.io">	
-  </form>
-</div>
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
 
 		
 			
@@ -886,33 +840,33 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/Backend/">Backend<span>2</span></a></li>
-		
-			<li><a href="/tags/xml/">xml<span>2</span></a></li>
-		
-			<li><a href="/tags/tools/">tools<span>1</span></a></li>
-		
-			<li><a href="/tags/Algorithm/">Algorithm<span>9</span></a></li>
-		
-			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
-		
-			<li><a href="/tags/Machine-Learning/">Machine Learning<span>2</span></a></li>
-		
-			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
-		
-			<li><a href="/tags/CUDA-C/">CUDA C<span>1</span></a></li>
-		
-			<li><a href="/tags/wordpress/">wordpress<span>2</span></a></li>
-		
 			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
-		
-			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
 		
 			<li><a href="/tags/apache/">apache<span>2</span></a></li>
 		
+			<li><a href="/tags/Backend/">Backend<span>2</span></a></li>
+		
 			<li><a href="/tags/C/">C++<span>9</span></a></li>
 		
+			<li><a href="/tags/tools/">tools<span>1</span></a></li>
+		
+			<li><a href="/tags/CUDA-C/">CUDA C<span>1</span></a></li>
+		
+			<li><a href="/tags/Machine-Learning/">Machine Learning<span>2</span></a></li>
+		
+			<li><a href="/tags/Algorithm/">Algorithm<span>9</span></a></li>
+		
+			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
+		
+			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
+		
+			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
+		
 			<li><a href="/tags/sublime-text-2/">sublime text 2<span>1</span></a></li>
+		
+			<li><a href="/tags/xml/">xml<span>2</span></a></li>
+		
+			<li><a href="/tags/wordpress/">wordpress<span>2</span></a></li>
 		
 		 
 		</ul>
@@ -967,6 +921,7 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 	
 	
 </div> <!-- row-fluid -->
+
 	</div>
   </div>
   <div class="container-narrow">
@@ -977,6 +932,9 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 </p> </footer>
 </div> <!-- container-narrow -->
   
+
+
+  
 <a id="gotop" href="#">   
   <span>▲</span> 
 </a>
@@ -985,18 +943,7 @@ P(a|s) = \prod_{j \in N} s_j(a_j)
 <script src="/js/gallery.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
-
-
-<script type="text/javascript">
-var disqus_shortname = 'wattlebirdgithubio';
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
-</script>
+<script src="/js/search.js"></script> 
 
 
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
@@ -1008,7 +955,17 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
-<!-- mathjax config similar to math.stackexchange -->
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+  <!-- mathjax config similar to math.stackexchange -->
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({

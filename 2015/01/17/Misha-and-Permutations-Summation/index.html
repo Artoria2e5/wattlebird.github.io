@@ -25,9 +25,11 @@
     <link href="/favicon.png" rel="icon">
   
 
-  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -50,16 +52,16 @@
 
 </head>
 
- <body>  
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+ <body>
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
+	<span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class="navbar-brand" href="/">Dedication</a>
+       <a class="navbar-brand" href="/">Dedication</a>
       <div class="collapse navbar-collapse nav-menu">
 		<ul class="nav navbar-nav">
 		  
@@ -99,24 +101,28 @@
 
 
 	
-		<div class="page-header">		
-			<h1> Misha and Permutations Summation</h1>
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Misha and Permutations Summation</h1>
 		</div>		
 	
+
+
+
 
 
 
 <div class="row post">
 	<!-- cols -->
 	
+	<div id="top_meta"></div>
 	<div class="col-md-9">
 	
 
-			
-
 	<!-- content -->
 	<div class="mypage">		
-	    <p>　　此题为 CF 上的一道中等难度题。题目的原文见<a href="http://codeforces.com/contest/501/problem/D" target="_blank" rel="external">这里</a>。用中文简单说一下吧：给定0到N-1的两个排列，求这两个排列的“和”。之所以会有“和”的概念出现，是因为排列的大小可以依据字典序确定。</p>
+	  		
+
+	  <p>　　此题为 CF 上的一道中等难度题。题目的原文见<a href="http://codeforces.com/contest/501/problem/D" target="_blank" rel="external">这里</a>。用中文简单说一下吧：给定0到N-1的两个排列，求这两个排列的“和”。之所以会有“和”的概念出现，是因为排列的大小可以依据字典序确定。</p>
 <p>　　所以，解决这个问题需要的两个关键步骤是：根据排列确定字典序大小；根据字典序大小还原排列。</p>
 <p>　　一个排列和其字典序大小是有某种确定关系的。<a href="https://en.wikipedia.org/wiki/Factorial_number_system" target="_blank" rel="external">Factorial number system</a> 就这种关系给出了理论支持。这种关系，是一种可以一一对应并且互相转换的关系。比如说，当 N=3 的时候，所有的排列和其字典序大小关系如下所示：</p>
 <table>
@@ -255,6 +261,14 @@
 
     </center>
 	</div>
+
+    <!-- share -->
+    
+        
+
+        
+
+    
 	
 	<!-- comment -->
 	
@@ -268,11 +282,11 @@
   
 </section>
 
-	
 	</div> <!-- col-md-9/col-md-12 -->
+		
 	
-	
-		<div class="col-md-3"> 
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
 
 	<!-- date -->
 	
@@ -316,29 +330,10 @@
 	
 </div><!-- col-md-3 -->
 
-	
+	</div>
+		
 
 </div><!-- row -->
-
-	</div>
-  </div>
-  <div class="container-narrow">
-  <footer> <p>
-  &copy; 2016 Ronnie Wang
-  
-      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
-</p> </footer>
-</div> <!-- container-narrow -->
-  
-<a id="gotop" href="#">   
-  <span>▲</span> 
-</a>
-
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/main.js"></script>
-
 
 <script type="text/javascript">
 var disqus_shortname = 'wattlebirdgithubio';
@@ -352,6 +347,31 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 Ronnie Wang
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
@@ -361,7 +381,17 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
-<!-- mathjax config similar to math.stackexchange -->
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+  <!-- mathjax config similar to math.stackexchange -->
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({

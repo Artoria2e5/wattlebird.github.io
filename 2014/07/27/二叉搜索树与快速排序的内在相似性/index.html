@@ -25,9 +25,11 @@
     <link href="/favicon.png" rel="icon">
   
 
-  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -50,16 +52,16 @@
 
 </head>
 
- <body>  
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+ <body>
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
+	<span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class="navbar-brand" href="/">Dedication</a>
+       <a class="navbar-brand" href="/">Dedication</a>
       <div class="collapse navbar-collapse nav-menu">
 		<ul class="nav navbar-nav">
 		  
@@ -99,24 +101,28 @@
 
 
 	
-		<div class="page-header">		
-			<h1> 二叉搜索树与快速排序的内在相似性</h1>
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 二叉搜索树与快速排序的内在相似性</h1>
 		</div>		
 	
+
+
+
 
 
 
 <div class="row post">
 	<!-- cols -->
 	
+	<div id="top_meta"></div>
 	<div class="col-md-9">
 	
 
-			
-
 	<!-- content -->
 	<div class="mypage">		
-	    <p>对我来说，对随机事件的分析，恐怕是最难的。我原以为我数学学得还可以，直到我遇上了随机过程。这篇 blog 所讲的是算法分析，其中涉及到大量对随机情况的分析。因此我在此将其梳理一下，特别注重挖掘不同算法之间的分析过程的相似性。</p>
+	  		
+
+	  <p>对我来说，对随机事件的分析，恐怕是最难的。我原以为我数学学得还可以，直到我遇上了随机过程。这篇 blog 所讲的是算法分析，其中涉及到大量对随机情况的分析。因此我在此将其梳理一下，特别注重挖掘不同算法之间的分析过程的相似性。</p>
 <p>快速排序是一种原址排序方法，随机化的快排具有 <em>O(nlgn)</em> 的期望运行时间。这个在《算法导论》（第三版）的 7.4.2 节中有一个以比较操作为中心的证明方法。这个证明的核心思想就是：快速排序是由多次 partition 过程组成的，因此关键问题就在于获得 partition 过程的运行时间和运行 partition 过程的次数。partition 过程的最大运行次数是 n-1 次，可以记为 <em>O(n)</em> ，对于其运行时间，练习 7.1-3 给出的结论是 <em>Θ(n)</em> 。这样乍一算，似乎是 <em>O($n^2$)</em> 的时间复杂度。这样计算是错误的，因为 partition 的时间复杂度与其长度有关。这里，我们需要更为细致的分析。决定 partition 运行时间的是其内部循环次数。这个循环次数可以统计每次必须运行的比较次数而得到。通过计算整个 quicksort 的比较次数，我们就可以得到真正的 partition 循环次数。而这个比较次数的期望值，可以通过拆分成示性随机变量相加得到。这个分析的精华之处就在于分析出每两个元素进行比较的概率。很有意思，可以进行比较的组合是 <em>Θ($n^2$)</em> ，但是最终全部比较次数的期望是 <em>O(n lgn)</em> 。</p>
 <p>当然这个只是作为复习，不是今天的重点。这个方法实在是太不直观了点。这次我们用类似于 merge-sort 的分析方法进行分析。</p>
 <h3 id="快速排序分析">快速排序分析</h3><p>按照 merge-sort 的分析思路，quicksort 是将一个问题拆分成了两个子问题，但是由于子问题大小不是固定的，这时候就只能分析运行时间的期望。随机化的快速排序使得任何一个元素成为主元都是等可能的。因此我们有如下式子：</p>
@@ -167,6 +173,14 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 
     </center>
 	</div>
+
+    <!-- share -->
+    
+        
+
+        
+
+    
 	
 	<!-- comment -->
 	
@@ -180,11 +194,11 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
   
 </section>
 
-	
 	</div> <!-- col-md-9/col-md-12 -->
+		
 	
-	
-		<div class="col-md-3"> 
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
 
 	<!-- date -->
 	
@@ -228,29 +242,10 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 	
 </div><!-- col-md-3 -->
 
-	
+	</div>
+		
 
 </div><!-- row -->
-
-	</div>
-  </div>
-  <div class="container-narrow">
-  <footer> <p>
-  &copy; 2016 Ronnie Wang
-  
-      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
-</p> </footer>
-</div> <!-- container-narrow -->
-  
-<a id="gotop" href="#">   
-  <span>▲</span> 
-</a>
-
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/main.js"></script>
-
 
 <script type="text/javascript">
 var disqus_shortname = 'wattlebirdgithubio';
@@ -264,6 +259,31 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 Ronnie Wang
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
@@ -273,7 +293,17 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
-<!-- mathjax config similar to math.stackexchange -->
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+  <!-- mathjax config similar to math.stackexchange -->
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({

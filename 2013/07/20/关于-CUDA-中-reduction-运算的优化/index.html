@@ -25,9 +25,11 @@
     <link href="/favicon.png" rel="icon">
   
 
-  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -50,16 +52,16 @@
 
 </head>
 
- <body>  
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+ <body>
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
+	<span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class="navbar-brand" href="/">Dedication</a>
+       <a class="navbar-brand" href="/">Dedication</a>
       <div class="collapse navbar-collapse nav-menu">
 		<ul class="nav navbar-nav">
 		  
@@ -99,24 +101,28 @@
 
 
 	
-		<div class="page-header">		
-			<h1> 关于 CUDA 中 reduction 运算的优化</h1>
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 关于 CUDA 中 reduction 运算的优化</h1>
 		</div>		
 	
+
+
+
 
 
 
 <div class="row post">
 	<!-- cols -->
 	
+	<div id="top_meta"></div>
 	<div class="col-md-9">
 	
 
-			
-
 	<!-- content -->
 	<div class="mypage">		
-	    <p>最近在Udacity上学习有关基于CUDA的并行运算。在学习当中除了Udacity上面所给的资源以外，我本人还查找了很多其他资料。我计划把我所查找到的这些资料写成技术blog，以供以后查阅。</p>
+	  		
+
+	  <p>最近在Udacity上学习有关基于CUDA的并行运算。在学习当中除了Udacity上面所给的资源以外，我本人还查找了很多其他资料。我计划把我所查找到的这些资料写成技术blog，以供以后查阅。</p>
 <p>在Unit 3当中，讲到了三种常见的并行运算：reduce、scan和histogram。简单地讲，reduce运算的输入是一个数据集，和一个运算符（二值，结合性），输出为一个数据，其为数据集中的数据依次与运算符相作用后的结果，如求和、求最大值、求最小值都是reduce. Scan运算的输入是一个数组，一个二值运算符和一个identity element. 这个identity element正如0之于加，1之于乘。常见的scan运算为求累积概率。当然我这种说法很不科学，只要能意会就行了。</p>
 <p>最常见的reduce算法就是利用了完全二叉树的结构，分两步完成：</p>
 <p>对于这一算法的实现，文献[1]以七种算法的逐级演进说明了reduce的优化过程。下面主要讲讲这个优化思想和过程。</p>
@@ -150,7 +156,7 @@
 <ul class="pagination">
 	 
 				
-    	<li class="prev"><a href="/2014/01/26/Permalink-404-Error-之解决方案/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+    	<li class="prev"><a href="/2014/01/26/坡道的起点——AWS上Wordpress建站小记/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
   		
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
@@ -164,6 +170,14 @@
 
     </center>
 	</div>
+
+    <!-- share -->
+    
+        
+
+        
+
+    
 	
 	<!-- comment -->
 	
@@ -177,11 +191,11 @@
   
 </section>
 
-	
 	</div> <!-- col-md-9/col-md-12 -->
+		
 	
-	
-		<div class="col-md-3"> 
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
 
 	<!-- date -->
 	
@@ -225,29 +239,10 @@
 	
 </div><!-- col-md-3 -->
 
-	
+	</div>
+		
 
 </div><!-- row -->
-
-	</div>
-  </div>
-  <div class="container-narrow">
-  <footer> <p>
-  &copy; 2016 Ronnie Wang
-  
-      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
-</p> </footer>
-</div> <!-- container-narrow -->
-  
-<a id="gotop" href="#">   
-  <span>▲</span> 
-</a>
-
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/main.js"></script>
-
 
 <script type="text/javascript">
 var disqus_shortname = 'wattlebirdgithubio';
@@ -261,6 +256,31 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 Ronnie Wang
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
@@ -270,7 +290,17 @@ var disqus_shortname = 'wattlebirdgithubio';
 </script>
 
 
-<!-- mathjax config similar to math.stackexchange -->
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+  <!-- mathjax config similar to math.stackexchange -->
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
