@@ -120,6 +120,73 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2014-10-12 </div>
+			<div class="article-title"><a href="/2014/10/12/Game-Theory-Note-week-1/" >Game Theory Note - week 1</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>This week’s game theory was dedicated to introduction, overview, uses of game theory, some applications and examples, and formal definitions of: the normal form, payoffs, strategies, pure strategy Nash equilibrium, dominant strategies..</p>
+<h2 id="Define_a_Game">Define a Game</h2><ol>
+<li>Normal form: List what payoffs get as a function of their actions.</li>
+<li>Extensive form: Includes timing of moves, players moves sequentially, represented as a tree.</li>
+</ol>
+<h3 id="Finite,_n-person_normal_form_game:_$$:">Finite, n-person normal form game: $<n, a,="" u="">$:</n,></h3><ul>
+<li>Players: $N={1, \ldots, n}$, indexed by i;</li>
+<li>Action set for player i: $a=(a_1, \ldots, a_n) \in A = A_1 \times \ldots \times A_n$ is an action profile;</li>
+<li>Utility function or Payoff function for player i: $u_i:A \mapsto \mathbf{R} $, $u=(u_1, \ldots, u_n)$ is a profile of utility functions.</li>
+</ul>
+<h2 id="Type_of_Games">Type of Games</h2><table>
+<thead>
+<tr>
+<th>Type of Game</th>
+<th>Properties</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pure Competition</td>
+<td>1. Exactly two players of opposed interests; Zero sum special case when $u_1(a)+u_2(a)=0$</td>
+<td>Matching Pennies, Rock-Paper-Scissors</td>
+</tr>
+<tr>
+<td>Coordination</td>
+<td>Players have same interests: $\forall a \in A, \forall i,j, u_i(a)=u_j(a)$</td>
+<td>side of road</td>
+</tr>
+<tr>
+<td>Coordination and Competition</td>
+<td></td>
+<td>Battle of the Sexes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Nash_Equilibrium">Nash Equilibrium</h2><p>In game theory, the Nash equilibrium is a solution concept of a <strong>non-cooperative game</strong> involving two or more players, in which each player is assumed to know the equilibrium strategies of the other players, and no player has anything to gain by changing only their own strategy. If each player has chosen a strategy and no player can benefit by changing strategies while the other players keep theirs unchanged, then the current set of strategy choices and the corresponding payoffs constitute a Nash equilibrium.[^1]</p>
+<p>Someone has an incentive to deviate from a profile of actions that do not form an equilibrium.</p>
+<p>Best Resopnse<br>: If you knew what everyone else was going to do, it would be easy to pick your own action.<br>: Nash equilibrium looks for stable action profiles.</p>
+<h2 id="Dominant_Strategies">Dominant Strategies</h2><p>Strategy (currently) is choosing an action (“pure strategy”)</p>
+<p>Denote $s_i$ and $s_i’$ as two strategies for player i, and $S_{-i}$ be the set of all possible strategy profiles for the other players.</p>
+<p>$s_i$ strictly dominates $s_i’$ if $ \forall s_{-i} \in S_{-i}, u_{i}(s_i, s_{-i}) \gt u_{i}(s_i’, s_{-i})$<br>$s_i$ very weakly dominates $s_i’$ if $ \forall s_{-i} \in S_{-i}, u_{i}(s_i, s_{-i} ) \ge u_{i}(s_i’, s_{-i})$<br>Please pay attention to the difference between best response, which lies in the definition of strategy.</p>
+<p>A strategy profile consisting of dominant strategies for every player must be a Nash equilibrium! An equilibrium in strictly dominant strategies must be unique.</p>
+<h2 id="Pareto_Optimality">Pareto Optimality</h2><p>Some times, one outcome $o$ is at least as good for every agent as another outcome $o’$, and there’s some agent who strictly prefers $o$ to $o’$.</p>
+<p>An outcome $o^*$ is Pareto-optimal if there is no other outcome that  Pareto-dominates it.</p>
+<p>[^1]: Nash equilibrium, <a href="https://en.wikipedia.org/wiki/Real_number" target="_blank" rel="external">https://en.wikipedia.org/wiki/Real_number</a></p>
+
+	
+	</div>
+  <a type="button" href="/2014/10/12/Game-Theory-Note-week-1/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2014-10-04 </div>
 			<div class="article-title"><a href="/2014/10/04/一种树的表达法/" >一种树的表达法</a></div>						
 		</h3>
@@ -568,6 +635,8 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 		
 			<li><a href="/categories/Analytical/">Analytical<span>2</span></a></li>
 		
+			<li><a href="/categories/Competition/">Competition<span>1</span></a></li>
+		
 			<li><a href="/categories/Notes/">Notes<span>6</span></a></li>
 		
 			<li><a href="/categories/OJ-Review/">OJ Review<span>5</span></a></li>
@@ -585,33 +654,33 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
+			<li><a href="/tags/xml/">xml<span>2</span></a></li>
 		
 			<li><a href="/tags/apache/">apache<span>2</span></a></li>
 		
-			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
-		
-			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
-		
-			<li><a href="/tags/C/">C++<span>9</span></a></li>
-		
 			<li><a href="/tags/Algorithm/">Algorithm<span>9</span></a></li>
-		
-			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
-		
-			<li><a href="/tags/Backend/">Backend<span>2</span></a></li>
 		
 			<li><a href="/tags/wordpress/">wordpress<span>2</span></a></li>
 		
-			<li><a href="/tags/xml/">xml<span>2</span></a></li>
+			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
+		
+			<li><a href="/tags/tools/">tools<span>1</span></a></li>
 		
 			<li><a href="/tags/sublime-text-2/">sublime text 2<span>1</span></a></li>
 		
+			<li><a href="/tags/Machine-Learning/">Machine Learning<span>3</span></a></li>
+		
+			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
+		
+			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
+		
+			<li><a href="/tags/C/">C++<span>9</span></a></li>
+		
+			<li><a href="/tags/Backend/">Backend<span>2</span></a></li>
+		
+			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
+		
 			<li><a href="/tags/CUDA-C/">CUDA C<span>1</span></a></li>
-		
-			<li><a href="/tags/Machine-Learning/">Machine Learning<span>2</span></a></li>
-		
-			<li><a href="/tags/tools/">tools<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -623,6 +692,10 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2016/06/18/滴滴算法大赛总结/" ><i class="fa fa-file-o"></i>滴滴算法大赛总结...</a>
+      </li>
     
       <li>
         <a href="/2016/02/05/使用-rankit-构建更科学的排名/" ><i class="fa fa-file-o"></i>使用 rankit 构建更科学的排名...</a>
@@ -638,10 +711,6 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
     
       <li>
         <a href="/2015/04/26/Combination-Sum/" ><i class="fa fa-file-o"></i>Combination Sum...</a>
-      </li>
-    
-      <li>
-        <a href="/2015/03/08/How-I-build-up-Chi-同步率改-v0-3-实现细节/" ><i class="fa fa-file-o"></i>How I build up Chi: 同步率改 v0...</a>
       </li>
     
   </ul>
