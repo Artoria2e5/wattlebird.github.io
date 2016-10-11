@@ -120,6 +120,44 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2014-10-18 </div>
+			<div class="article-title"><a href="/2014/10/18/Game-Theory-Note-week-2/" >Game Theory Note - week 2</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>This week’s Game Theory is dedicated to Mixed-Strategy Nash Equilibrium.</p>
+<p>Mixed strategy, different from pure strategy, means that players can choose an action according to a specific probability distribution (among all possible actions). The following concepts and definitions all derives from this idea:</p>
+<p>Strategy $s_i$<br>: any probability distribution over the actions $A_i$ for agent i.</p>
+<p>Pure strategy<br>: only one action is played with positive probability.</p>
+<p>Mixed strategy<br>: more than one action is played with positive probability.</p>
+<p>Support (of mixed strategy)<br>: all the actions</p>
+<p>We denote $s_i \in S_i$ as $S_i$ is the set of all strategies for user i. All strategies $S = S_1 \times S_2 \times \ldots \times S_n$</p>
+<p><strong>Expected Utility</strong> is defined as follows:<br><span>$$\begin{equation}
+u_{i}(s) = \sum_{a \in A} u_{i}(a) P(a|s) \
+P(a|s) = \prod_{j \in N} s_j(a_j)
+\end{equation}$$</span><!-- Has MathJax --><br>In the equations above, a means a possible action profile from A. $a_j$ does not mean each of the action but the player j’s corresponding action in the corresponding profile.</p>
+<p>Best response</p>
+<p>$s_{i}^{<em>} \in BR(s_{-i}) iff \forall s_i \in S_i u_{i}(s_{i}^{</em>}, s_{-i}) \ge u_{i}(s_i, s_{-i})$</p>
+<p>Nash Equilibrium</p>
+<p>$s=\<s\_1, s\_2,="" \ldots,="" s\_n="" \=""> \mbox( is a Nash Equilibrium iff }\forall i, s_i \in BR(s_{-i})$</s\_1,></p>
+<p>Theorem<br>: Every finite game has a Nash Equilibrium. (While comparing to pure strategy games!)</p>
+<p>It is often very hard to compute the Nash Equilibrium of a game, but in simple cases, in which we know the support, we can get the Nash Equilibrium by being acknowledged that a player will act indifferently facing a mixed strategy.</p>
+
+	
+	</div>
+  <a type="button" href="/2014/10/18/Game-Theory-Note-week-2/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2014-10-12 </div>
 			<div class="article-title"><a href="/2014/10/12/Game-Theory-Note-week-1/" >Game Theory Note - week 1</a></div>						
 		</h3>
@@ -471,44 +509,6 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2014-01-26 </div>
-			<div class="article-title"><a href="/2014/01/26/Permalink-404-Error-之解决方案/" >Permalink 404 Error 之解决方案</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<p>Ike本人在设置wordpress的时候，在settings里面发现了Permalink。从这个页面的主要介绍来看，Permalink的作用就是自定义文章的Link，使之更为结构化和友好。</p>
-<p>但是当Ike设置了某个除Default之外的某个Permalink的时候，如果点击一篇发表的文章，就会出现Page Not Found的404错误。</p>
-<p>经反复查证，Ike发现Permalink与.htaccess和Apache的设置紧密相关。</p>
-<p>如果我们在Settings页面的Permalink中就某个选项进行了保存，wordpress在后台就会改写.htaccess：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># BEGIN WordPress&#10;&#60;IfModule mod_rewrite.c&#62;&#10;RewriteEngine On&#10;RewriteBase /blog/&#10;RewriteRule ^index\.php$ - [L]&#10;RewriteCond %&#123;REQUEST_FILENAME&#125; !-f&#10;RewriteCond %&#123;REQUEST_FILENAME&#125; !-d&#10;RewriteRule . /blog/index.php [L]&#10;&#60;/IfModule&#62;&#10;# END WordPress</span><br></pre></td></tr></table></figure>
-<p>这个.htaccess文件是存放在网页的根目录下的，和wp-config.php存放的位置一样。如果wordpress不能改写此文件，则需要手动改写，但需要注意到的是Ike本人的网页是放在/blog文件夹下的，如果放在别的文件夹下，正确的.htaccess内容可能和上面不一样。</p>
-<p>如果成功改写.htaccess，只是成功了一半。因为Ike本人发现即使赋予了后台改写.htaccess的权限，还是不能访问。</p>
-<p>有文献报道指出，Apache需要使能rewrite_module才能使得Permalink正常工作。这就需要改写Aapche的配置文件。</p>
-<p>运行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find / -type f -iname &#34;httpd.conf&#34;</span><br></pre></td></tr></table></figure>
-<p>找到Apache的配置文件的位置。据相关文献报道，需要做的是将</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#LoadModule rewrite_module modules/mod_rewrite.so</span><br></pre></td></tr></table></figure>
-<p>的注释去掉。</p>
-<p>但甚为坑爹的是，Ike发现虚拟机上的Apache配置文件本来就没有把这一行给注释掉。</p>
-<p>经过一番查证，这里一篇<a href="https://stackoverflow.com/questions/17206524/404-error-after-changing-permalinks-wordpress" target="_blank" rel="external">帖子</a>为我们给出了解决方案的暗示。于是Ike在配置文件下找到了如下若干行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#10;# Each directory to which Apache has access can be configured with respect&#10;# to which services and features are allowed and/or disabled in that&#10;# directory (and its subdirectories).&#10;#&#10;# First, we configure the &#34;default&#34; to be a very restrictive set of&#10;# features.&#10;#&#10;&#60;Directory /&#62;&#10;    Options FollowSymLinks&#10;    AllowOverride All&#10;&#60;/Directory&#62;&#10;&#10;...&#10;&#10;#&#10;# Possible values for the Options directive are &#34;None&#34;, &#34;All&#34;,&#10;# or any combination of:&#10;#   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews&#10;#&#10;# Note that &#34;MultiViews&#34; must be named *explicitly* --- &#34;Options All&#34;&#10;# doesn&#39;t give it to you.&#10;#&#10;# The Options directive is both complicated and important.  Please see&#10;# http://httpd.apache.org/docs/2.2/mod/core.html#options&#10;# for more information.&#10;#&#10;    Options Indexes FollowSymLinks&#10;&#10;#&#10;# AllowOverride controls what directives may be placed in .htaccess files.&#10;# AllowOverride controls what directives may be placed in .htaccess files.&#10;# It can be &#34;All&#34;, &#34;None&#34;, or any combination of the keywords:&#10;#   Options FileInfo AuthConfig Limit&#10;#&#10;    AllowOverride All</span><br></pre></td></tr></table></figure>
-<p>按照上面配置，再重启Apache即可。大功告成。</p>
-
-	
-	</div>
-  <a type="button" href="/2014/01/26/Permalink-404-Error-之解决方案/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2014-01-26 </div>
 			<div class="article-title"><a href="/2014/01/26/坡道的起点——AWS上Wordpress建站小记/" >坡道的起点——AWS上Wordpress建站小记</a></div>						
 		</h3>
 	
@@ -543,8 +543,8 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 	
 	<!-- display as entry -->	
 		<h3 class="title">
-			<div class="date"> 2013-07-20 </div>
-			<div class="article-title"><a href="/2013/07/20/关于-CUDA-中-reduction-运算的优化/" >关于 CUDA 中 reduction 运算的优化</a></div>						
+			<div class="date"> 2014-01-26 </div>
+			<div class="article-title"><a href="/2014/01/26/Permalink-404-Error-之解决方案/" >Permalink 404 Error 之解决方案</a></div>						
 		</h3>
 	
 
@@ -553,35 +553,27 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
   <div class="row">
 	
 	
-		<p>最近在Udacity上学习有关基于CUDA的并行运算。在学习当中除了Udacity上面所给的资源以外，我本人还查找了很多其他资料。我计划把我所查找到的这些资料写成技术blog，以供以后查阅。</p>
-<p>在Unit 3当中，讲到了三种常见的并行运算：reduce、scan和histogram。简单地讲，reduce运算的输入是一个数据集，和一个运算符（二值，结合性），输出为一个数据，其为数据集中的数据依次与运算符相作用后的结果，如求和、求最大值、求最小值都是reduce. Scan运算的输入是一个数组，一个二值运算符和一个identity element. 这个identity element正如0之于加，1之于乘。常见的scan运算为求累积概率。当然我这种说法很不科学，只要能意会就行了。</p>
-<p>最常见的reduce算法就是利用了完全二叉树的结构，分两步完成：</p>
-<p>对于这一算法的实现，文献[1]以七种算法的逐级演进说明了reduce的优化过程。下面主要讲讲这个优化思想和过程。</p>
-<p>首先一种是二叉树结构的直接实现算法，interleaved addressing:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">reduce0</span><span class="params">(<span class="keyword">int</span> *g_idata, <span class="keyword">int</span> *g_odata)</span> </span>&#123;</span><br><span class="line"><span class="keyword">extern</span> __shared__ <span class="keyword">int</span> sdata[];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// each thread loads one element from global to shared mem</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> tid = threadIdx.x;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> i = blockIdx.x*blockDim.x + threadIdx.x;</span><br><span class="line">sdata[tid] = g_idata[i];</span><br><span class="line">__syncthreads();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// do reduction in shared mem</span></span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">int</span> s=<span class="number">1</span>; s &lt; blockDim.x; s *= <span class="number">2</span>) &#123;</span><br><span class="line">         <span class="keyword">if</span> (tid % (<span class="number">2</span>*s) == <span class="number">0</span>) &#123;</span><br><span class="line">             sdata[tid] += sdata[tid + s];</span><br><span class="line">         &#125;</span><br><span class="line">     __syncthreads();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write result for this block to global mem</span></span><br><span class="line"><span class="keyword">if</span> (tid == <span class="number">0</span>) g_odata[blockIdx.x] = sdata[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对于红字那一段，高度分支结构会导致性能下降，因此利用strided index将其修改成非分支结构：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> s=<span class="number">1</span>; s &lt; blockDim.x; s *= <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">2</span> * s * tid;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; blockDim.x) &#123;</span><br><span class="line">        sdata[index] += sdata[index + s];</span><br><span class="line">    &#125;</span><br><span class="line">    __syncthreads();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由于偶数strided index会产生bank conflicts（以后会讲什么是bank conflicts），我们将其改进为sequential addressing:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> s=blockDim.x/<span class="number">2</span>; s&gt;<span class="number">0</span>; s&gt;&gt;=<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (tid &lt; s) &#123;</span><br><span class="line">         sdata[tid] += sdata[tid + s];</span><br><span class="line">    &#125;</span><br><span class="line">    __syncthreads();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Sequential addressing中，红字凸显的部分说明有一半的线程在第一循环迭代的时候就处于空闲状态。为了改进，我们采用first add during load技术。简单地说，我们采用上述过程一半的block，在刚进入线程的时候就进行一次operation，具体实现如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// perform first level of reduction,</span></span><br><span class="line"><span class="comment">// reading from global memory, writing to shared memory</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> tid = threadIdx.x;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> i = blockIdx.x*(blockDim.x*<span class="number">2</span>) + threadIdx.x;</span><br><span class="line">sdata[tid] = g_idata[i] + g_idata[i+blockDim.x];</span><br><span class="line">__syncthreads();</span><br></pre></td></tr></table></figure>
-<p>我认为将代码优化到这一地步已经足够了，但是令我惊讶的是，文献[1]进行了如下分析：当前代码的带宽仍没有达到GPU的上限，究其原因，由于对于核心运算的不是存储、运算的辅助性指令造成了代码的瓶颈，代码没有达到最大性能。解决的办法就是拆开循环。</p>
-<p>分析指出，当s&lt;=32时，有效线程减少至一束（wrap）。一束线程是SIMD（单指令多数据） synchronous的。这就意味着s&lt;=32时不需要__syncthreads()和if (tid &lt; s)。因此，我们可以拆解最后六个循环：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> s=blockDim.x/<span class="number">2</span>; s&gt;<span class="number">32</span>; s&gt;&gt;=<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (tid &lt; s)</span><br><span class="line">    sdata[tid] += sdata[tid + s];</span><br><span class="line">    __syncthreads();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (tid &lt; <span class="number">32</span>)</span><br><span class="line">&#123;</span><br><span class="line">    sdata[tid] += sdata[tid + <span class="number">32</span>];</span><br><span class="line">    sdata[tid] += sdata[tid + <span class="number">16</span>];</span><br><span class="line">    sdata[tid] += sdata[tid + <span class="number">8</span>];</span><br><span class="line">    sdata[tid] += sdata[tid + <span class="number">4</span>];</span><br><span class="line">    sdata[tid] += sdata[tid + <span class="number">2</span>];</span><br><span class="line">    sdata[tid] += sdata[tid + <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>值得注意的是，这减少了所有线程束的无用功，而不仅仅是最后一个线程束。</p>
-<p>进一步地，该文献还指出，在已知迭代数的情况下，可以完全拆解循环。在只讨论二的n次方大小的数组时，我们通过模板，给出blocksize，就可以给出一个通用的reduce算法：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (blockSize &gt;= <span class="number">512</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (tid &lt; <span class="number">256</span>) &#123; sdata[tid] += sdata[tid + <span class="number">256</span>]; &#125; __syncthreads();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (blockSize &gt;= <span class="number">256</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (tid &lt; <span class="number">128</span>) &#123; sdata[tid] += sdata[tid + <span class="number">128</span>]; &#125; __syncthreads();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (blockSize &gt;= <span class="number">128</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (tid &lt; <span class="number">64</span>) &#123; sdata[tid] += sdata[tid + <span class="number">64</span>]; &#125; __syncthreads();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (tid &lt; <span class="number">32</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (blockSize &gt;= <span class="number">64</span>) sdata[tid] += sdata[tid + <span class="number">32</span>];</span><br><span class="line">    <span class="keyword">if</span> (blockSize &gt;= <span class="number">32</span>) sdata[tid] += sdata[tid + <span class="number">16</span>];</span><br><span class="line">    <span class="keyword">if</span> (blockSize &gt;= <span class="number">16</span>) sdata[tid] += sdata[tid + <span class="number">8</span>];</span><br><span class="line">    <span class="keyword">if</span> (blockSize &gt;= <span class="number">8</span>) sdata[tid] += sdata[tid + <span class="number">4</span>];</span><br><span class="line">    <span class="keyword">if</span> (blockSize &gt;= <span class="number">4</span>) sdata[tid] += sdata[tid + <span class="number">2</span>];</span><br><span class="line">    <span class="keyword">if</span> (blockSize &gt;= <span class="number">2</span>) sdata[tid] += sdata[tid + <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>函数声明变为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">unsigned</span> <span class="keyword">int</span> blockSize&gt;</span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">reduce5</span><span class="params">(<span class="keyword">int</span> *g_idata, <span class="keyword">int</span> *g_odata)</span></span></span><br></pre></td></tr></table></figure>
-<p>最后，文献指出，通过算法级联的思想，可以把上文中first add during load变成multiple add.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> tid = threadIdx.x;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> i = blockIdx.x*(blockSize*<span class="number">2</span>) + threadIdx.x;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> gridSize = blockSize*<span class="number">2</span>*gridDim.x;</span><br><span class="line">sdata[tid] = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (i &lt; n) &#123;</span><br><span class="line">    sdata[tid] += g_idata[i] + g_idata[i+blockSize];</span><br><span class="line">    i += gridSize;</span><br><span class="line">&#125;</span><br><span class="line">__syncthreads();</span><br></pre></td></tr></table></figure>
-<p>注意这个是更改的开头部分。</p>
-<p>参考文献：</p>
-<p>[1] <a href="http://developer.download.nvidia.com/compute/cuda/1.1-Beta/x86_website/projects/reduction/doc/reduction.pdf" target="_blank" rel="external">Optimizing Parallel Reduction in CUDA - Nvidia</a></p>
+		<p>Ike本人在设置wordpress的时候，在settings里面发现了Permalink。从这个页面的主要介绍来看，Permalink的作用就是自定义文章的Link，使之更为结构化和友好。</p>
+<p>但是当Ike设置了某个除Default之外的某个Permalink的时候，如果点击一篇发表的文章，就会出现Page Not Found的404错误。</p>
+<p>经反复查证，Ike发现Permalink与.htaccess和Apache的设置紧密相关。</p>
+<p>如果我们在Settings页面的Permalink中就某个选项进行了保存，wordpress在后台就会改写.htaccess：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># BEGIN WordPress&#10;&#60;IfModule mod_rewrite.c&#62;&#10;RewriteEngine On&#10;RewriteBase /blog/&#10;RewriteRule ^index\.php$ - [L]&#10;RewriteCond %&#123;REQUEST_FILENAME&#125; !-f&#10;RewriteCond %&#123;REQUEST_FILENAME&#125; !-d&#10;RewriteRule . /blog/index.php [L]&#10;&#60;/IfModule&#62;&#10;# END WordPress</span><br></pre></td></tr></table></figure>
+<p>这个.htaccess文件是存放在网页的根目录下的，和wp-config.php存放的位置一样。如果wordpress不能改写此文件，则需要手动改写，但需要注意到的是Ike本人的网页是放在/blog文件夹下的，如果放在别的文件夹下，正确的.htaccess内容可能和上面不一样。</p>
+<p>如果成功改写.htaccess，只是成功了一半。因为Ike本人发现即使赋予了后台改写.htaccess的权限，还是不能访问。</p>
+<p>有文献报道指出，Apache需要使能rewrite_module才能使得Permalink正常工作。这就需要改写Aapche的配置文件。</p>
+<p>运行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find / -type f -iname &#34;httpd.conf&#34;</span><br></pre></td></tr></table></figure>
+<p>找到Apache的配置文件的位置。据相关文献报道，需要做的是将</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#LoadModule rewrite_module modules/mod_rewrite.so</span><br></pre></td></tr></table></figure>
+<p>的注释去掉。</p>
+<p>但甚为坑爹的是，Ike发现虚拟机上的Apache配置文件本来就没有把这一行给注释掉。</p>
+<p>经过一番查证，这里一篇<a href="https://stackoverflow.com/questions/17206524/404-error-after-changing-permalinks-wordpress" target="_blank" rel="external">帖子</a>为我们给出了解决方案的暗示。于是Ike在配置文件下找到了如下若干行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#10;# Each directory to which Apache has access can be configured with respect&#10;# to which services and features are allowed and/or disabled in that&#10;# directory (and its subdirectories).&#10;#&#10;# First, we configure the &#34;default&#34; to be a very restrictive set of&#10;# features.&#10;#&#10;&#60;Directory /&#62;&#10;    Options FollowSymLinks&#10;    AllowOverride All&#10;&#60;/Directory&#62;&#10;&#10;...&#10;&#10;#&#10;# Possible values for the Options directive are &#34;None&#34;, &#34;All&#34;,&#10;# or any combination of:&#10;#   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews&#10;#&#10;# Note that &#34;MultiViews&#34; must be named *explicitly* --- &#34;Options All&#34;&#10;# doesn&#39;t give it to you.&#10;#&#10;# The Options directive is both complicated and important.  Please see&#10;# http://httpd.apache.org/docs/2.2/mod/core.html#options&#10;# for more information.&#10;#&#10;    Options Indexes FollowSymLinks&#10;&#10;#&#10;# AllowOverride controls what directives may be placed in .htaccess files.&#10;# AllowOverride controls what directives may be placed in .htaccess files.&#10;# It can be &#34;All&#34;, &#34;None&#34;, or any combination of the keywords:&#10;#   Options FileInfo AuthConfig Limit&#10;#&#10;    AllowOverride All</span><br></pre></td></tr></table></figure>
+<p>按照上面配置，再重启Apache即可。大功告成。</p>
 
 	
 	</div>
-  <a type="button" href="/2013/07/20/关于-CUDA-中-reduction-运算的优化/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2014/01/26/Permalink-404-Error-之解决方案/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -601,7 +593,7 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
         <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
 
 		
-          <li class="next disabled"><a>下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>
+		   <li class="next"> <a href="/page/3/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
         
 	
 </ul>
@@ -641,7 +633,7 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 		
 			<li><a href="/categories/OJ-Review/">OJ Review<span>5</span></a></li>
 		
-			<li><a href="/categories/OJ-review/">OJ review<span>2</span></a></li>
+			<li><a href="/categories/OJ-review/">OJ review<span>3</span></a></li>
 		
 			<li><a href="/categories/Projects/">Projects<span>4</span></a></li>
 		
@@ -654,33 +646,37 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
-		
-			<li><a href="/tags/Algorithm/">Algorithm<span>9</span></a></li>
-		
-			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
-		
-			<li><a href="/tags/xml/">xml<span>2</span></a></li>
-		
-			<li><a href="/tags/wordpress/">wordpress<span>2</span></a></li>
+			<li><a href="/tags/Machine-Learning/">Machine Learning<span>3</span></a></li>
 		
 			<li><a href="/tags/tools/">tools<span>1</span></a></li>
 		
-			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
+			<li><a href="/tags/CUDA-C/">CUDA C<span>1</span></a></li>
+		
+			<li><a href="/tags/Max-flow/">Max flow<span>1</span></a></li>
+		
+			<li><a href="/tags/Minimun-cut/">Minimun cut<span>1</span></a></li>
+		
+			<li><a href="/tags/C/">C++<span>10</span></a></li>
+		
+			<li><a href="/tags/xml/">xml<span>2</span></a></li>
+		
+			<li><a href="/tags/Algorithm/">Algorithm<span>10</span></a></li>
 		
 			<li><a href="/tags/Backend/">Backend<span>2</span></a></li>
 		
-			<li><a href="/tags/apache/">apache<span>2</span></a></li>
+			<li><a href="/tags/Game-theory/">Game theory<span>3</span></a></li>
 		
-			<li><a href="/tags/sublime-text-2/">sublime text 2<span>1</span></a></li>
-		
-			<li><a href="/tags/CUDA-C/">CUDA C<span>1</span></a></li>
-		
-			<li><a href="/tags/C/">C++<span>9</span></a></li>
-		
-			<li><a href="/tags/Machine-Learning/">Machine Learning<span>3</span></a></li>
+			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
 		
 			<li><a href="/tags/Data-Structure/">Data Structure<span>3</span></a></li>
+		
+			<li><a href="/tags/apache/">apache<span>2</span></a></li>
+		
+			<li><a href="/tags/wordpress/">wordpress<span>2</span></a></li>
+		
+			<li><a href="/tags/Coursera/">Coursera<span>3</span></a></li>
+		
+			<li><a href="/tags/sublime-text-2/">sublime text 2<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -692,6 +688,10 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2016/10/11/Max-flow-minimum-cut/" ><i class="fa fa-file-o"></i>Max flow, minimum cut...</a>
+      </li>
     
       <li>
         <a href="/2016/06/18/滴滴算法大赛总结/" ><i class="fa fa-file-o"></i>滴滴算法大赛总结...</a>
@@ -707,10 +707,6 @@ E[P(n)]=E\left[ \frac{1}{n} \sum_{k=0}^{n-1}(P(k)+P(n-k-1)+n-1)\right]
     
       <li>
         <a href="/2015/05/25/分解质因数/" ><i class="fa fa-file-o"></i>分解质因数...</a>
-      </li>
-    
-      <li>
-        <a href="/2015/04/26/Combination-Sum/" ><i class="fa fa-file-o"></i>Combination Sum...</a>
       </li>
     
   </ul>
